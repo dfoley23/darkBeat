@@ -9,12 +9,39 @@
 *.class
 
 # generated files
-bin/
 gen/
+bin/
 
 # Local configuration file (sdk path, etc)
 local.properties
 
 # Eclipse project files
-.classpath
-.project
+
+.metadata
+
+# Mac files
+.DS_STORE
+.DS_Store
+
+werescrewed-html/.gwt/.gwt-log
+
+werescrewed-html/war/WEB-INF/classes/com/blindtigergames/werescrewed/GwtDefinition.gwt.xml
+
+werescrewed-html/war/WEB-INF/classes/com/blindtigergames/werescrewed/GwtDefinition.gwt.xml
+
+gwt-unitCache/
+
+*.log
+
+WEB-INF/
+
+war/
+*.orig
+
+*.BACKUP.*
+
+*.BASE.*
+
+*.LOCAL.*
+
+*.REMOTE.*

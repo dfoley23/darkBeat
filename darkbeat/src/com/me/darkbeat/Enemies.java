@@ -3,7 +3,10 @@ package com.me.darkbeat;
 public class Enemies{
 	
 	private int position;
-	private int direction;
+	
+	public Enemies( int newPosition){
+		position = newPosition;
+	}
 	
 	public int getPosition(){
 		return position;
@@ -12,17 +15,4 @@ public class Enemies{
 	public void setPosition(int newPosition){
 		position = newPosition;
 	}
-	
-	public int getDirection(){
-		return direction;
-	}
-	
-	public void setDirection( int newDirection){
-		direction = newDirection;
-	}
-	
-	public void move(){
-		//TODO
-	}
-	
 }
