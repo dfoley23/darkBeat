@@ -25,11 +25,12 @@ public class Level{
 		mapArray[newIndex] = category;
 	}
 	
-	public void checkPlayer(int playerPos, int category){
-		if(mapArray[playerPos] == 0) {
-			mapArray[playerPos] = category;
+	public void checkPlayer(Player player){
+		if(mapArray[player.getPosition()] == 0) {
+			mapArray[player.getOldPosition()] = 0;
+			mapArray[player.getPosition()] = 2;
 		} else {
-			switch (mapArray[playerPos]){
+			switch (mapArray[player.getPosition()]){
 			case 1:
 				break;
 			case 2:
@@ -51,6 +52,7 @@ public class Level{
 			default:
 				break;
 			}
+			player.setPosition(player.getOldPosition());
 		}
 	}
 

@@ -29,8 +29,6 @@ public class GameScreen {
 							   1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 
 							   1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 1, 0, 1,
 							   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-	private Player player;
-	
 	private Player nickCage;
 	private Level testlevel;
 	private int lWidth;
@@ -70,8 +68,6 @@ public class GameScreen {
 		floor = new Sprite(region2);
 		floor.setSize(0.5f, 0.5f * floor.getHeight() / floor.getWidth());
 		floor.setOrigin(0, 0);
-		
-		player = new Player(15, 14);
 
 		for(int i = 0; i < 10; i++){
 			 test[i] = 1;
@@ -90,29 +86,20 @@ public class GameScreen {
 		 
 		 testlevel = new Level(lWidth, lHeight, test);
 		 
-		 testDraw();
+		 //testDraw();
 		
 	}
 	
 	public void update(){
 
 		nickCage.update();
-		if (nickCage.changed){
-			int playerPos = nickCage.getPosition();
-			int oldPlayerPos = nickCage.getOldPosition();
-			switch(test[playerPos]){
-				case 0: //empty
-					test[oldPlayerPos] = 0;
-					test[playerPos] = 2;
-					break;
-					
-				default: //not empty
-					nickCage.setPosition(nickCage.getOldPosition());
-					break;
-			}
-			
+		if (nickCage.changedPosition){
+			testlevel.checkPlayer(nickCage);
 			testDraw();
-			nickCage.changed = false;
+			nickCage.changedPosition = false;
+		} else if (nickCage.changedDirection){
+			testDraw();
+			nickCage.changedDirection = false;
 		}
 	}
 	
