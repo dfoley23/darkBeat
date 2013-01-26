@@ -52,6 +52,7 @@ public class ScreenManager {
 				switch (intro.getChoice()) {
 				case start:
 					playing = true;
+					intro.dispose();
 					break;
 				case quit:
 					System.exit(0);
