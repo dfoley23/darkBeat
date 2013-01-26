@@ -40,7 +40,6 @@ public class GameScreen {
 		 }
 		 
 		 nickCage = new Player(45,10);
-		 
 		 testlevel = new Level(lWidth, lHeight, test);
 		 
 		 testDraw();
