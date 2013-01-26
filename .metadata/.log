@@ -962,3 +962,9 @@ Command-line arguments:  -os macosx -ws cocoa -arch x86 -product org.eclipse.epp
 
 !ENTRY org.eclipse.ui 4 4 2013-01-26 08:54:29.784
 !MESSAGE Unable to find Action Set: org.eclipse.wb.core.ui.actionset
+
+!ENTRY com.android.ide.eclipse.adt 1 0 2013-01-26 10:36:56.997
+!MESSAGE No valid Android XML Editor Delegate found for file /darkbeat/src/DarkBeatGame.gwt.xml [Res null, type null]
+
+!ENTRY com.android.ide.eclipse.adt 2 0 2013-01-26 11:01:39.133
+!MESSAGE Fatal error: No API database found at null

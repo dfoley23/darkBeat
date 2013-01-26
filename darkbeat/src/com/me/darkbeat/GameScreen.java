@@ -2,12 +2,18 @@ package com.me.darkbeat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameScreen {
+	private OrthographicCamera camera;
+	private SpriteBatch batch;
 	
-	private SpriteBatch batch = null;
 	public GameScreen(){
+		float w = Gdx.graphics.getWidth();
+		float h = Gdx.graphics.getHeight();
+	
+		camera = new OrthographicCamera(1, h/w);
 		batch = new SpriteBatch();
 		
 	}
@@ -20,12 +26,12 @@ public class GameScreen {
 		
 	}
 	
-	public void render(){
-		Gdx.gl.glClearColor( 1f, 1f, 1f, 1f );
-		Gdx.gl.glClear( GL10.GL_COLOR_BUFFER_BIT );
+	public void draw(){
+		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
-		batch.begin(); 
-
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
 		batch.end();
 		
 	}
