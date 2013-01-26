@@ -27,14 +27,16 @@ public class GameScreen {
 			1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1,
 			0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-	
+
 	private Player nickCage;
 	private Level testlevel;
 	private int lWidth;
 	private int lHeight;
 	private int[] test = new int[100];
 	private int[] textureArray = new int[test.length];
-	
+	private int numCats;
+	private Cat[] cats;
+
 	public GameScreen() {
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
@@ -42,55 +44,65 @@ public class GameScreen {
 		lWidth = 10;
 		lHeight = 10;
 
+		numCats = 1;
+
 		camera = new OrthographicCamera(1, h / w);
 		batch = new SpriteBatch();
 
 		Texture wallFrontTex1 = new Texture(
-				Gdx.files.internal("data/textures/walls/stone_wall_1_front.png"));
+				Gdx.files
+						.internal("data/textures/walls/stone_wall_1_front.png"));
 		wallFrontTex1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
+
 		Texture wallFrontTex2 = new Texture(
-				Gdx.files.internal("data/textures/walls/stone_wall_2_front.png"));
+				Gdx.files
+						.internal("data/textures/walls/stone_wall_2_front.png"));
 		wallFrontTex2.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
+
 		Texture wallFrontTex3 = new Texture(
-				Gdx.files.internal("data/textures/walls/stone_wall_3_fornt.png"));
+				Gdx.files
+						.internal("data/textures/walls/stone_wall_3_fornt.png"));
 		wallFrontTex3.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
+
 		Texture wallFrontTex4 = new Texture(
-				Gdx.files.internal("data/textures/walls/stone_wall_4_front.png"));
+				Gdx.files
+						.internal("data/textures/walls/stone_wall_4_front.png"));
 		wallFrontTex4.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
+
 		Texture wallLeftTex1 = new Texture(
 				Gdx.files.internal("data/textures/walls/stone_wall_1_left.png"));
 		wallLeftTex1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
+
 		Texture wallLeftTex2 = new Texture(
 				Gdx.files.internal("data/textures/walls/stone_wall_2_left.png"));
 		wallLeftTex2.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
+
 		Texture wallLeftTex3 = new Texture(
 				Gdx.files.internal("data/textures/walls/stone_wall_3_left.png"));
 		wallLeftTex3.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
+
 		Texture wallLeftTex4 = new Texture(
 				Gdx.files.internal("data/textures/walls/stone_wall_4_left.png"));
 		wallLeftTex4.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
+
 		Texture wallRightTex1 = new Texture(
-				Gdx.files.internal("data/textures/walls/stone_wall_1_right.png"));
+				Gdx.files
+						.internal("data/textures/walls/stone_wall_1_right.png"));
 		wallRightTex1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
+
 		Texture wallRightTex2 = new Texture(
-				Gdx.files.internal("data/textures/walls/stone_wall_2_right.png"));
+				Gdx.files
+						.internal("data/textures/walls/stone_wall_2_right.png"));
 		wallRightTex2.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
+
 		Texture wallRightTex3 = new Texture(
-				Gdx.files.internal("data/textures/walls/stone_wall_3_right.png"));
+				Gdx.files
+						.internal("data/textures/walls/stone_wall_3_right.png"));
 		wallRightTex3.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
+
 		Texture wallRightTex4 = new Texture(
-				Gdx.files.internal("data/textures/walls/stone_wall_4_right.png"));
+				Gdx.files
+						.internal("data/textures/walls/stone_wall_4_right.png"));
 		wallRightTex4.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
 		Texture floorTex = new Texture(Gdx.files.internal("data/floor.png"));
@@ -123,20 +135,23 @@ public class GameScreen {
 				break;
 			}
 			wallFront[i] = new Sprite(region1);
-			wallFront[i].setSize(1, 1 * wallFront[i].getHeight()
-					/ wallFront[i].getWidth());
+			wallFront[i].setSize(1,
+					1 * wallFront[i].getHeight() / wallFront[i].getWidth());
 			wallFront[i].setOrigin(0.5f, 0.5f);
-			wallFront[i].setPosition(-wallFront[i].getWidth()/2.0f, -wallFront[i].getHeight()/2.0f);
+			wallFront[i].setPosition(-wallFront[i].getWidth() / 2.0f,
+					-wallFront[i].getHeight() / 2.0f);
 			wallLeft[i] = new Sprite(region2);
-			wallLeft[i].setSize(1, 1 * wallLeft[i].getHeight()
-					/ wallLeft[i].getWidth());
+			wallLeft[i].setSize(1,
+					1 * wallLeft[i].getHeight() / wallLeft[i].getWidth());
 			wallLeft[i].setOrigin(0.5f, 0.5f);
-			wallLeft[i].setPosition(-wallLeft[i].getWidth()/2.0f, -wallLeft[i].getHeight()/2.0f);
+			wallLeft[i].setPosition(-wallLeft[i].getWidth() / 2.0f,
+					-wallLeft[i].getHeight() / 2.0f);
 			wallRight[i] = new Sprite(region3);
-			wallRight[i].setSize(1, 1 * wallRight[i].getHeight()
-					/ wallRight[i].getWidth());
+			wallRight[i].setSize(1,
+					1 * wallRight[i].getHeight() / wallRight[i].getWidth());
 			wallRight[i].setOrigin(0.5f, 0.5f);
-			wallRight[i].setPosition(-wallRight[i].getWidth()/2.0f, -wallRight[i].getHeight()/2.0f);
+			wallRight[i].setPosition(-wallRight[i].getWidth() / 2.0f,
+					-wallRight[i].getHeight() / 2.0f);
 		}
 
 		floor = new Sprite(region2);
@@ -156,9 +171,12 @@ public class GameScreen {
 			test[i] = 1;
 		}
 
-		for(int i=0; i<test.length; i++){
-			textureArray[i] = test[i];
-		}
+		test[23] = 3;
+
+		nickCage = new Player(45, 10);
+		testlevel = new Level(lWidth, lHeight, test);
+
+		cats = testlevel.setCats();
 		Random randGen = new Random();
 		int randNum = 0;
 		for (int i = 0; i < textureArray.length; i++) {
@@ -177,15 +195,27 @@ public class GameScreen {
 	}
 
 	public void update() {
-
 		nickCage.update();
 		if (nickCage.changedPosition) {
 			testlevel.checkPlayer(nickCage);
 			testDraw();
 			nickCage.changedPosition = false;
+			if (cats.length > 0) {
+				for (int c = 0; c < cats.length; c++) {
+					System.out.println("len: " + cats.length + " pos: "
+							+ cats[c].getPosition());
+					cats[c].move();
+				}
+			}
 		} else if (nickCage.changedDirection) {
-			testDraw();
 			nickCage.changedDirection = false;
+			if (cats.length > 0) {
+				for (int c = 0; c < cats.length; c++) {
+					System.out.println("len: " + cats.length + " pos: "
+							+ cats[c].getPosition());
+					cats[c].move();
+				}
+			}
 		}
 	}
 
