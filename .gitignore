@@ -23,11 +23,7 @@ local.properties
 .DS_STORE
 .DS_Store
 
-werescrewed-html/.gwt/.gwt-log
-
-werescrewed-html/war/WEB-INF/classes/com/blindtigergames/werescrewed/GwtDefinition.gwt.xml
-
-werescrewed-html/war/WEB-INF/classes/com/blindtigergames/werescrewed/GwtDefinition.gwt.xml
+darkbeat-html/.gwt/.gwt-log
 
 gwt-unitCache/
 
