@@ -2,6 +2,7 @@ package com.darkbeat;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.me.darkbeat.DarkBeatGame;
 
 public class Main {
 	public static void main(String[] args) {

@@ -1,6 +1,6 @@
 package com.darkbeat.client;
 
-import com.darkbeat.DarkBeatGame;
+import com.me.darkbeat.DarkBeatGame;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
