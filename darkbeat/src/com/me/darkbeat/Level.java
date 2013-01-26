@@ -2,30 +2,14 @@ package com.me.darkbeat;
 
 public class Level{
 	
-	/*TileTypes:
-		0: empty
-		1: wall
-		2: player
-		3: open door
-		4: close door
-		5: cat
-		6: wumpus
-	*/
-	
 	public int mapArray[];
-	
-	private int size;
 	private int height;
 	private int width;
-	private Player player;
 	
-	public Level(int levelWidth, int levelHeight, int level[], Player asshole){
+	public Level(int levelWidth, int levelHeight, int level[]){
 		mapArray = level;
 		height = levelHeight;
 		width = levelWidth;
-		player = asshole;
-		size = height * width;
-		mapArray[player.getPosition()] = 2;
 	}
 	
 	public int getHeight(){
@@ -36,37 +20,37 @@ public class Level{
 		return width;
 	}
 	
-	public void setHeight(int h){
-		height = h;
-	}
-
-	public void setWidth(int w){
-		width = w;
+	public void switchEnemy(int newIndex, int oldIndex, int category){
+		mapArray[oldIndex] = 0;
+		mapArray[newIndex] = category;
 	}
 	
-	public void update(){
-		int playerPos = player.getPosition();
-		switch(mapArray[playerPos]){
-			case 0: //empty
-				mapArray[playerPos] = 2;
+	public void checkPlayer(int playerPos, int category){
+		if(mapArray[playerPos] == 0) {
+			mapArray[playerPos] = category;
+		} else {
+			switch (mapArray[playerPos]){
+			case 1:
 				break;
-				
-			default: //not empty
-				player.setPosition(player.getOldPosition());
+			case 2:
 				break;
-			
-		}
-	}
-	
-	public void testDraw(){
-		int p = 0;
-		for(int i = 0; i < height; i++){
-			for(int j = 0; j < width; j++){
-				System.out.print(mapArray[p]);
-				System.out.print(" ");
-				p++;
+			case 3:
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			case 6:
+				break;
+			case 7:
+				break;
+			case 8:
+				break;
+			case 9:
+				break;
+			default:
+				break;
 			}
-			System.out.print("\n");
 		}
 	}
 }
