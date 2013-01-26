@@ -25,6 +25,7 @@ public class Level{
 		width = levelWidth;
 		player = asshole;
 		size = height * width;
+		mapArray[player.getPosition()] = 2;
 	}
 	
 	public int getHeight(){
@@ -54,6 +55,18 @@ public class Level{
 				player.setPosition(player.getOldPosition());
 				break;
 			
+		}
+	}
+	
+	public void testDraw(){
+		int p = 0;
+		for(int i = 0; i < height; i++){
+			for(int j = 0; j < width; j++){
+				System.out.print(mapArray[p]);
+				System.out.print(" ");
+				p++;
+			}
+			System.out.print("\n");
 		}
 	}
 }
