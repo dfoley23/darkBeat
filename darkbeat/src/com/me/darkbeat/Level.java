@@ -2,19 +2,7 @@ package com.me.darkbeat;
 
 public class Level{
 	
-	/*TileTypes:
-		0: empty
-		1: wall
-		2: player
-		3: open door
-		4: close door
-		5: cat
-		6: wumpus
-	*/
-	
 	public int mapArray[];
-	
-	private int size;
 	private int height;
 	private int width;
 	
@@ -22,7 +10,6 @@ public class Level{
 		mapArray = level;
 		height = levelHeight;
 		width = levelWidth;
-		size = height * width;
 	}
 	
 	public int getHeight(){
@@ -33,14 +20,40 @@ public class Level{
 		return width;
 	}
 	
-	public void setHeight(int h){
-		height = h;
-	}
-
-	public void setWidth(int w){
-		width = w;
+	public void switchEnemy(int newIndex, int oldIndex, int category){
+		mapArray[oldIndex] = 0;
+		mapArray[newIndex] = category;
 	}
 	
-	public void update(){
+	public void checkPlayer(Player player){
+		if(mapArray[player.getPosition()] == 0) {
+			mapArray[player.getOldPosition()] = 0;
+			mapArray[player.getPosition()] = 2;
+		} else {
+			switch (mapArray[player.getPosition()]){
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			case 6:
+				break;
+			case 7:
+				break;
+			case 8:
+				break;
+			case 9:
+				break;
+			default:
+				break;
+			}
+			player.setPosition(player.getOldPosition());
+		}
 	}
+
 }

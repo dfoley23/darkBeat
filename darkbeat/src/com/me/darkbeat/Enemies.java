@@ -2,7 +2,7 @@ package com.me.darkbeat;
 
 public class Enemies{
 	
-	private int position;
+	protected int position;
 	
 	public Enemies( int newPosition){
 		position = newPosition;

@@ -22,6 +22,7 @@ public class ScreenManager {
 		Texture tex2 = new Texture(Gdx.files.internal("data/quitItem.png"));
 		
 		tex1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		tex2.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
 		TextureRegion region1 = new TextureRegion(tex1, 0, 0, 128, 64);
 		TextureRegion region2 = new TextureRegion(tex2, 0, 0, 128, 64);
@@ -52,6 +53,7 @@ public class ScreenManager {
 				switch (intro.getChoice()) {
 				case start:
 					playing = true;
+					intro.dispose();
 					break;
 				case quit:
 					System.exit(0);
