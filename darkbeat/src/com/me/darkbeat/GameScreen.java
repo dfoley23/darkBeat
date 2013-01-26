@@ -34,6 +34,8 @@ public class GameScreen {
 	private int lWidth;
 	private int lHeight;
 	private int[] test = new int[100];
+	private int numCats;
+	private Cat[] cats;
 
 	
 	public GameScreen(){
@@ -42,6 +44,7 @@ public class GameScreen {
 		
 		lWidth = 10;
 		lHeight = 10;
+		numCats = 1;
 	
 		camera = new OrthographicCamera(1, h/w);
 		batch = new SpriteBatch();
@@ -82,20 +85,27 @@ public class GameScreen {
 			 test[i] = 1;
 		 }
 		 
+		 test[23] = 3;
+		 
 		 nickCage = new Player(45,10);
 		 testlevel = new Level(lWidth, lHeight, test);
 		 
-		 //testDraw();
+		 cats = testlevel.setCats();
 		
 	}
 	
 	public void update(){
-
 		nickCage.update();
 		if (nickCage.changedPosition){
 			testlevel.checkPlayer(nickCage);
 			testDraw();
 			nickCage.changedPosition = false;
+			if(cats.length > 0){
+				for(int c = 0; c < cats.length; c++){
+					System.out.println("len: " + cats.length + " pos: " + cats[c].getPosition());
+					cats[c].move();
+				}
+			}
 		} else if (nickCage.changedDirection){
 			testDraw();
 			nickCage.changedDirection = false;

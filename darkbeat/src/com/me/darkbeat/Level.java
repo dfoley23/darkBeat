@@ -25,6 +25,24 @@ public class Level{
 		mapArray[newIndex] = category;
 	}
 	
+	public Cat[] setCats(){
+		int count = 0;
+		for(int i = 0; i < (width * height); i++){
+			if(mapArray[i] == 3){
+				count++;
+			}
+		}
+		Cat[] catList = new Cat[count];
+		int catNumber = 0;
+		for(int i = 0; i < (width * height); i++){
+			if(mapArray[i] == 3){
+				catList[catNumber] = new Cat(i, this);
+				catNumber++;
+			}
+		}
+		return catList;
+	}
+	
 	public void checkPlayer(Player player){
 		if(mapArray[player.getPosition()] == 0) {
 			mapArray[player.getOldPosition()] = 0;
