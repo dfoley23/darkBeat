@@ -48,36 +48,47 @@ public class GameScreen {
 		Texture wallFrontTex1 = new Texture(
 				Gdx.files.internal("data/textures/walls/stone_wall_1_front.png"));
 		wallFrontTex1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
 		Texture wallFrontTex2 = new Texture(
 				Gdx.files.internal("data/textures/walls/stone_wall_2_front.png"));
 		wallFrontTex2.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
 		Texture wallFrontTex3 = new Texture(
 				Gdx.files.internal("data/textures/walls/stone_wall_3_fornt.png"));
 		wallFrontTex3.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
 		Texture wallFrontTex4 = new Texture(
 				Gdx.files.internal("data/textures/walls/stone_wall_4_front.png"));
 		wallFrontTex4.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
 		Texture wallLeftTex1 = new Texture(
 				Gdx.files.internal("data/textures/walls/stone_wall_1_left.png"));
 		wallLeftTex1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
 		Texture wallLeftTex2 = new Texture(
 				Gdx.files.internal("data/textures/walls/stone_wall_2_left.png"));
 		wallLeftTex2.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
 		Texture wallLeftTex3 = new Texture(
 				Gdx.files.internal("data/textures/walls/stone_wall_3_left.png"));
 		wallLeftTex3.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
 		Texture wallLeftTex4 = new Texture(
 				Gdx.files.internal("data/textures/walls/stone_wall_4_left.png"));
 		wallLeftTex4.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
 		Texture wallRightTex1 = new Texture(
 				Gdx.files.internal("data/textures/walls/stone_wall_1_right.png"));
 		wallRightTex1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
 		Texture wallRightTex2 = new Texture(
 				Gdx.files.internal("data/textures/walls/stone_wall_2_right.png"));
 		wallRightTex2.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
 		Texture wallRightTex3 = new Texture(
 				Gdx.files.internal("data/textures/walls/stone_wall_3_right.png"));
 		wallRightTex3.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
 		Texture wallRightTex4 = new Texture(
 				Gdx.files.internal("data/textures/walls/stone_wall_4_right.png"));
 		wallRightTex4.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -94,19 +105,19 @@ public class GameScreen {
 		for (int i = 0; i < 4; i++) {
 			switch (i) {
 			case 1:
-				region1 = new TextureRegion(wallFrontTex2, 0, 0, 64, 64);
-				region2 = new TextureRegion(wallLeftTex2, 0, 0, 64, 64);
-				region3 = new TextureRegion(wallRightTex2, 0, 0, 64, 64);
+				region1 = new TextureRegion(wallFrontTex2, 0, 0, 800, 600);
+				region2 = new TextureRegion(wallLeftTex2, 0, 0, 800, 600);
+				region3 = new TextureRegion(wallRightTex2, 0, 0, 800, 600);
 				break;
 			case 2:
-				region1 = new TextureRegion(wallFrontTex3, 0, 0, 64, 64);
-				region2 = new TextureRegion(wallLeftTex3, 0, 0, 64, 64);
-				region3 = new TextureRegion(wallRightTex3, 0, 0, 64, 64);
+				region1 = new TextureRegion(wallFrontTex3, 0, 0, 800, 600);
+				region2 = new TextureRegion(wallLeftTex3, 0, 0, 800, 600);
+				region3 = new TextureRegion(wallRightTex3, 0, 0, 800, 600);
 				break;
 			case 3:
-				region1 = new TextureRegion(wallFrontTex4, 0, 0, 64, 64);
-				region2 = new TextureRegion(wallLeftTex4, 0, 0, 64, 64);
-				region3 = new TextureRegion(wallRightTex4, 0, 0, 64, 64);
+				region1 = new TextureRegion(wallFrontTex4, 0, 0, 800, 600);
+				region2 = new TextureRegion(wallLeftTex4, 0, 0, 800, 600);
+				region3 = new TextureRegion(wallRightTex4, 0, 0, 800, 600);
 				break;
 			default:
 				break;
@@ -208,8 +219,8 @@ public class GameScreen {
 			front = textureArray[nickCage.getPosition() + 1];
 			break;
 		case West:
-			left = textureArray[nickCage.getPosition() - testlevel.getWidth()];
-			right = textureArray[nickCage.getPosition() + testlevel.getWidth()];
+			left = textureArray[nickCage.getPosition() + testlevel.getWidth()];
+			right = textureArray[nickCage.getPosition() - testlevel.getWidth()];
 			front = textureArray[nickCage.getPosition() - 1];
 			break;
 		default:
