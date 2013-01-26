@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <dirs>
 <entry loc="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home" stamp="1302130170000"/>
-<<<<<<< HEAD
-=======
-<entry loc="C:\Program Files\Java\jre7" stamp="1358194566783"/>
->>>>>>> b14521d35b1cab0384b85a387ee4c507eef875d7
 <entry loc="/usr/lib/jvm/java-6-openjdk-i386" stamp="1353803090000"/>
 </dirs>
