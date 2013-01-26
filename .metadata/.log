@@ -18,3 +18,14 @@ org.eclipse.core.internal.resources.ResourceException: Resource '/darkbeat-andro
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
 !SUBENTRY 1 org.eclipse.core.resources 4 368 2013-01-25 21:01:27.194
 !MESSAGE Resource '/darkbeat-android/res' does not exist.
+
+!ENTRY org.eclipse.core.resources 2 2 2013-01-25 22:43:40.700
+!MESSAGE Save operation warnings.
+!SUBENTRY 1 org.eclipse.core.resources 2 234 2013-01-25 22:43:40.700
+!MESSAGE The project description file (.project) for 'darkbeat' was missing.  This file contains important information about the project.  A new project description file has been created, but some information about the project may have been lost.
+!SUBENTRY 1 org.eclipse.core.resources 2 234 2013-01-25 22:43:40.700
+!MESSAGE The project description file (.project) for 'darkbeat-android' was missing.  This file contains important information about the project.  A new project description file has been created, but some information about the project may have been lost.
+!SUBENTRY 1 org.eclipse.core.resources 2 234 2013-01-25 22:43:40.700
+!MESSAGE The project description file (.project) for 'darkbeat-desktop' was missing.  This file contains important information about the project.  A new project description file has been created, but some information about the project may have been lost.
+!SUBENTRY 1 org.eclipse.core.resources 2 234 2013-01-25 22:43:40.701
+!MESSAGE The project description file (.project) for 'darkbeat-html' was missing.  This file contains important information about the project.  A new project description file has been created, but some information about the project may have been lost.
