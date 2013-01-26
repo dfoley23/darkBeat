@@ -17,15 +17,12 @@ public class Level{
 	private int size;
 	private int height;
 	private int width;
-	private Player player;
 	
-	public Level(int levelWidth, int levelHeight, int level[], Player asshole){
+	public Level(int levelWidth, int levelHeight, int level[]){
 		mapArray = level;
 		height = levelHeight;
 		width = levelWidth;
-		player = asshole;
 		size = height * width;
-		mapArray[player.getPosition()] = 2;
 	}
 	
 	public int getHeight(){
@@ -45,28 +42,5 @@ public class Level{
 	}
 	
 	public void update(){
-		int playerPos = player.getPosition();
-		switch(mapArray[playerPos]){
-			case 0: //empty
-				mapArray[playerPos] = 2;
-				break;
-				
-			default: //not empty
-				player.setPosition(player.getOldPosition());
-				break;
-			
-		}
-	}
-	
-	public void testDraw(){
-		int p = 0;
-		for(int i = 0; i < height; i++){
-			for(int j = 0; j < width; j++){
-				System.out.print(mapArray[p]);
-				System.out.print(" ");
-				p++;
-			}
-			System.out.print("\n");
-		}
 	}
 }

@@ -10,6 +10,7 @@ public class Player{
 	private Direction dir;
 	private int mapWidth;
 	private int oldPos;
+	public boolean changed;
 	public enum Direction {
 		North, South, East, West;
 	}
@@ -18,10 +19,12 @@ public class Player{
 
 	
 	public Player(int startingPosition, int width) {
-		position = startingPosition;
+		
+		oldPos = position = startingPosition;
 		fear = 0.0f;
 		dir = Direction.East;
 		mapWidth = width;
+		changed = false;
 	}
 	
 	public void update(){
@@ -49,6 +52,7 @@ public class Player{
 					break;
 				}
 				keysReleased = false;
+				changed = true;
 			} else if (Gdx.input.isKeyPressed(Keys.A)) { //turn left
 				switch(dir){
 				case North:
@@ -67,6 +71,7 @@ public class Player{
 					break;
 				}
 				keysReleased = false;
+				changed = true;
 			} else if (Gdx.input.isKeyPressed(Keys.D)) { //turn right
 				switch(dir){
 				case North:
@@ -85,6 +90,7 @@ public class Player{
 					break;
 				}
 				keysReleased = false;
+				changed = true;
 			}
 		}
 		if (!(Gdx.input.isKeyPressed(Keys.D) || 
