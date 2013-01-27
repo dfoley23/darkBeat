@@ -283,8 +283,13 @@ public class GameScreen {
 			test[i] = 1;
 		}
 		for (int i = 10; i < 90; i++) {
-			if (i % lWidth == 9 || i % lHeight == 0)
-				test[i] = 1;
+			if (i % lWidth == 9 || i % lHeight == 0){
+				if(i==49){
+					test[i] = 0;
+				} else{
+					test[i] = 1;
+				}
+			}
 			else
 				test[i] = 0;
 		}
@@ -297,6 +302,7 @@ public class GameScreen {
 		}
 
 		test[23] = 3;
+		test[49] = 4;
 		
 		nickCage = new Player(45, 10);
 		testlevel = new Level(lWidth, lHeight, test);
@@ -390,6 +396,7 @@ public class GameScreen {
 			catSprite.draw(batch);
 			break;
 		case 4:
+			frontWall = true;
 			doorFront.draw(batch);
 			break;			
 		default:
@@ -397,6 +404,7 @@ public class GameScreen {
 		} 
 		switch(left){
 		case 4:
+			leftWall = true;
 			doorLeft.draw(batch);
 			break;			
 		default:
@@ -404,6 +412,7 @@ public class GameScreen {
 		}
 		switch(right){
 		case 4:
+			rightWall = true;
 			doorRight.draw(batch);
 			break;			
 		default:
