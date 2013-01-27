@@ -111,9 +111,6 @@ public class Player{
 			  Gdx.input.isKeyPressed(Keys.A) )){
 			keysReleased = true;
 		}
-		if(!hasHeart){
-			
-		}
 	}
 	
 	private void setAtDoor(){

@@ -3,19 +3,22 @@ package com.me.darkbeat;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 
-public class Level{
-	
+public class Level {
+
 	public int mapArray[];
 	private int height;
 	private int width;
+	private double maxDistance;
 	private Sound footSteps;
 	private Sound ohYeah;
 	private Sound openDoor;
 	private Sound catMEOW;
 	public int doorPos;
-	
-	public Level(int levelWidth, int levelHeight, int level[]){
-		ohYeah = Gdx.audio.newSound(Gdx.files.internal("data/sounds/oh_yeah_wav_cut.wav"));
+	public boolean hitCat = false;
+
+	public Level(int levelWidth, int levelHeight, int level[]) {
+		ohYeah = Gdx.audio.newSound(Gdx.files
+				.internal("data/sounds/oh_yeah_wav_cut.wav"));
 		mapArray = level;
 		height = levelHeight;
 		width = levelWidth;
@@ -23,9 +26,13 @@ public class Level{
 				.internal("data/sounds/footsteps.ogg"));
 		openDoor = Gdx.audio.newSound(Gdx.files
 				.internal("data/sounds/openDoor.ogg"));
-		catMEOW = Gdx.audio.newSound(Gdx.files
-				.internal("data/sounds/Meow.ogg"));
+		catMEOW = Gdx.audio
+				.newSound(Gdx.files.internal("data/sounds/Meow.ogg"));
 		doorPos = -1;
+
+		double temp = (levelHeight * levelHeight) + (levelWidth * levelWidth);
+		maxDistance = Math.sqrt(temp);
+		System.out.println("max dist: " + maxDistance);
 
 	}
 
@@ -60,46 +67,42 @@ public class Level{
 		return catList;
 	}
 
-	/* Types
-	 * 0: empty
-	 * 1: wall
-	 * 2: player 
-	 * 3: cat
-	 * 4: closed door
-	 * 5: open door
-	 * 6:
-	 * 7:
-	 * 8: Heart
-	 * 9: End goal
+	/*
+	 * Types 0: empty 1: wall 2: player 3: cat 4: closed door 5: open door 6: 7:
+	 * 8: Heart 9: End goal
 	 */
-	
-	public void checkPlayer(Player player) {
-		if(!player.isAtDoor && doorPos > 0 &&
-				mapArray[player.getPosition()] != 5){ 
+
+	public void checkPlayer(Player player, int heart) {
+		if (!player.isAtDoor && doorPos > 0
+				&& mapArray[player.getPosition()] != 5) {
 			mapArray[doorPos] = 4;
 			doorPos = -1;
 		}
-		if (mapArray[player.getPosition()] == 0 || 
-				mapArray[player.getPosition()] == 5) {
-			if(mapArray[player.getPosition()] == 5){
-				switch(player.getDirection()){
+		if (mapArray[player.getPosition()] == 0
+				|| mapArray[player.getPosition()] == 5
+				|| mapArray[player.getPosition()] == 3) {
+			if (mapArray[player.getPosition()] == 5) {
+				switch (player.getDirection()) {
 				case North:
 					mapArray[player.getPosition()] = 4;
-					player.setPosition(player.getPosition()-width);
+					player.setPosition(player.getPosition() - width);
 					break;
 				case South:
 					mapArray[player.getPosition()] = 4;
-					player.setPosition(player.getPosition()+width);
+					player.setPosition(player.getPosition() + width);
 					break;
 				case East:
 					mapArray[player.getPosition()] = 4;
-					player.setPosition(player.getPosition()+1);
+					player.setPosition(player.getPosition() + 1);
 					break;
 				case West:
 					mapArray[player.getPosition()] = 4;
-					player.setPosition(player.getPosition()-1);
+					player.setPosition(player.getPosition() - 1);
 					break;
 				}
+			} else if (mapArray[player.getPosition()] == 3) {
+				catMEOW.play(0.6f);
+				hitCat = true;
 			} else {
 				mapArray[player.getOldPosition()] = 0;
 				mapArray[player.getPosition()] = 2;
@@ -110,9 +113,6 @@ public class Level{
 			case 1:
 				break;
 			case 2:
-				break;
-			case 3:
-				catMEOW.play(0.6f);
 				break;
 			case 4:
 				mapArray[player.getPosition()] = 5;
@@ -139,6 +139,29 @@ public class Level{
 			}
 			player.setPosition(player.getOldPosition());
 		}
+		if (!player.hasHeart) {
+			int heartOffset_x = (player.getPosition() % width)
+					- (heart % width);
+			int heartOffset_y = (player.getPosition() / width)
+					- (heart / width);
+			double distance = Math.sqrt(Math.pow(heartOffset_x, 2)
+					+ Math.pow(heartOffset_y, 2));
+			if (distance > maxDistance / 3.0) {
+				player.setVolume(0.0f);
+			} else {
+				distance = distance / maxDistance;
+				System.out.println("d1: " + distance);
+				distance = 1.0 - distance;
+				System.out.println("d2: " + distance);
+				distance = Math.pow(distance, 8);
+				System.out.println("d3: " + distance);
+				player.setVolume((float) distance);
+				System.out.println("h.x: " + heartOffset_x + " h.y: "
+						+ heartOffset_y);
+			}
+		} else 
+			player.setVolume(1.0f);
+		System.out.println("player pos: " + player.getPosition());
 	}
 
 }

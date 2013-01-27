@@ -49,6 +49,7 @@ public class GameScreen {
 	private int[] textureArray = new int[test.length];
 	private int numCats;
 	private Cat[] cats;
+	private int heartPosition = 64;
 
 	public GameScreen() {
 		float w = Gdx.graphics.getWidth();
@@ -77,7 +78,7 @@ public class GameScreen {
 		
 		Texture catTex = new Texture(
 				Gdx.files
-						.internal("data/cat.png"));
+						.internal("data/textures/misc/cat.png"));
 		catTex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
 		
@@ -155,6 +156,7 @@ public class GameScreen {
 		Texture wallRightTex1 = new Texture(
 				Gdx.files
 						.internal("data/textures/walls/stone_wall_1_right.png"));
+		
 		wallRightTex1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
 		Texture wallRightTex2 = new Texture(
@@ -311,9 +313,10 @@ public class GameScreen {
 			textureArray[i] = test[i];
 		}
 
-		test[23] = 3;
-		test[64] = 8;
+		test[36] = 3;
 		test[49] = 4;
+		test[heartPosition] = 8;
+		test[11] = 4;
 		
 		nickCage = new Player(45, 10);
 		testlevel = new Level(lWidth, lHeight, test);
@@ -339,7 +342,7 @@ public class GameScreen {
 	public void update() {
 		nickCage.update();
 		if (nickCage.changedPosition) {
-			testlevel.checkPlayer(nickCage);
+			testlevel.checkPlayer(nickCage, heartPosition);
 			nickCage.changedPosition = false;
 			if (cats.length > 0) {
 				for (int c = 0; c < cats.length; c++) {
@@ -409,7 +412,9 @@ public class GameScreen {
 		}
 		switch(front){
 		case 3:
-			catSprite.draw(batch);
+			if(testlevel.hitCat){
+				catSprite.draw(batch);
+			}
 			break;
 		case 4:
 			frontWall = true;
