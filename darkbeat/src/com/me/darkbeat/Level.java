@@ -10,6 +10,9 @@ public class Level{
 	private int width;
 	private Sound footSteps;
 	private Sound ohYeah;
+	private Sound openDoor;
+	private Sound catMEOW;
+	public int doorPos;
 	
 	public Level(int levelWidth, int levelHeight, int level[]){
 		ohYeah = Gdx.audio.newSound(Gdx.files.internal("data/sounds/oh_yeah_wav_cut.wav"));
@@ -18,6 +21,11 @@ public class Level{
 		width = levelWidth;
 		footSteps = Gdx.audio.newSound(Gdx.files
 				.internal("data/sounds/footsteps.ogg"));
+		openDoor = Gdx.audio.newSound(Gdx.files
+				.internal("data/sounds/openDoor.ogg"));
+		catMEOW = Gdx.audio.newSound(Gdx.files
+				.internal("data/sounds/Meow.ogg"));
+		doorPos = -1;
 
 	}
 
@@ -66,10 +74,37 @@ public class Level{
 	 */
 	
 	public void checkPlayer(Player player) {
-		if (mapArray[player.getPosition()] == 0) {
-			mapArray[player.getOldPosition()] = 0;
-			mapArray[player.getPosition()] = 2;
-			footSteps.play(1.0f);
+		if(!player.isAtDoor && doorPos > 0 &&
+				mapArray[player.getPosition()] != 5){ 
+			mapArray[doorPos] = 4;
+			doorPos = -1;
+		}
+		if (mapArray[player.getPosition()] == 0 || 
+				mapArray[player.getPosition()] == 5) {
+			if(mapArray[player.getPosition()] == 5){
+				switch(player.getDirection()){
+				case North:
+					mapArray[player.getPosition()] = 4;
+					player.setPosition(player.getPosition()-width);
+					break;
+				case South:
+					mapArray[player.getPosition()] = 4;
+					player.setPosition(player.getPosition()+width);
+					break;
+				case East:
+					mapArray[player.getPosition()] = 4;
+					player.setPosition(player.getPosition()+1);
+					break;
+				case West:
+					mapArray[player.getPosition()] = 4;
+					player.setPosition(player.getPosition()-1);
+					break;
+				}
+			} else {
+				mapArray[player.getOldPosition()] = 0;
+				mapArray[player.getPosition()] = 2;
+				footSteps.play(0.3f);
+			}
 		} else {
 			switch (mapArray[player.getPosition()]) {
 			case 1:
@@ -77,8 +112,13 @@ public class Level{
 			case 2:
 				break;
 			case 3:
+				catMEOW.play(0.6f);
 				break;
 			case 4:
+				mapArray[player.getPosition()] = 5;
+				openDoor.play(0.6f);
+				doorPos = player.getPosition();
+				player.isAtDoor = true;
 				break;
 			case 5:
 				break;

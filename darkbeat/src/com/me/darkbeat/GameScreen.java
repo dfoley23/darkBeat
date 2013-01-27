@@ -29,8 +29,10 @@ public class GameScreen {
 	private Sprite catSprite;
 	private Sprite floor;
 	private Music heartbeat;
-	private int mapArray[] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-			0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1,
+	private int mapArray[] = { 
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+			1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 
+			1, 0, 0, 0, 0, 0, 0, 1, 0, 1,
 			1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0,
 			0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0,
 			0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
@@ -348,6 +350,10 @@ public class GameScreen {
 			}
 			testDraw();
 		} else if (nickCage.changedDirection) {
+			if(!nickCage.isAtDoor && testlevel.doorPos > 0){ 
+				testlevel.mapArray[testlevel.doorPos] = 4;
+				testlevel.doorPos = -1;
+			}
 			nickCage.changedDirection = false;
 			if (cats.length > 0) {
 				for (int c = 0; c < cats.length; c++) {
