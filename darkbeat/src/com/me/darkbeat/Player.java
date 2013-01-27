@@ -140,4 +140,12 @@ public class Player{
 	public void setDirection(Direction newDirection){
 		dir = newDirection;
 	}
+	
+	public void setVolume(float vol){
+		volume = vol;
+	}
+	
+	public float getVolume(){
+		return volume;
+	}
 }

@@ -3,6 +3,7 @@ package com.me.darkbeat;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -24,6 +25,7 @@ public class GameScreen {
 	private Sprite handOut;
 	private Sprite catSprite;
 	private Sprite floor;
+	private Music heartbeat;
 	private int mapArray[] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
 			0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1,
 			1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0,
@@ -62,6 +64,12 @@ public class GameScreen {
 		Sound hitWall = Gdx.audio.newSound(Gdx.files.internal("data/sounds/hitWall.mp3"));
 		Sound openDoorSound = Gdx.audio.newSound(Gdx.files.internal("data/sounds/openDoor.mp3"));
 		Sound closeDoorSound = Gdx.audio.newSound(Gdx.files.internal("data/sounds/closeDoor.mp3"));*/
+		
+		heartbeat = Gdx.audio.newMusic(Gdx.files.internal("data/sounds/Heartbeat.ogg"));
+		
+		heartbeat.setLooping(true);
+		heartbeat.setVolume(0.0f);
+		heartbeat.play();
 		
 		Texture catTex = new Texture(
 				Gdx.files
@@ -256,6 +264,7 @@ public class GameScreen {
 		}
 
 		test[23] = 3;
+		test[64] = 8;
 		
 		nickCage = new Player(45, 10);
 		testlevel = new Level(lWidth, lHeight, test);
@@ -302,6 +311,7 @@ public class GameScreen {
 			}
 			testDraw();
 		}
+		heartbeat.setVolume(nickCage.getVolume());
 	}
 
 	public void dispose() {
