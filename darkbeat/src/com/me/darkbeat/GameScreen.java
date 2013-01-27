@@ -37,6 +37,14 @@ public class GameScreen {
 	private Sprite heartDoorLeft;
 	private Sprite heartDoorRight;
 	private Sprite heartDoorFront;
+	private Sprite win0;
+	private Sprite win1;
+	private Sprite win2;
+	private Sprite win3;
+	private Sprite win4;
+	private Sprite win5;
+	private Sprite win6;
+	private Sprite win7;
 	private Music heartbeat;
 	private Sound beat;
 	private Sound beat_up;
@@ -116,6 +124,31 @@ public class GameScreen {
 		beat_up = Gdx.audio.newSound(Gdx.files.internal("data/sounds/h1.ogg"));
 		beat_down = Gdx.audio.newSound(Gdx.files.internal("data/sounds/h2.ogg"));
 
+		Texture winTex0 = new Texture(
+				Gdx.files.internal("data/textures/win/win0.png"));
+		winTex0.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		Texture winTex1 = new Texture(
+				Gdx.files.internal("data/textures/win/win1.png"));
+		winTex1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		Texture winTex2 = new Texture(
+				Gdx.files.internal("data/textures/win/win2.png"));
+		winTex2.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		Texture winTex3 = new Texture(
+				Gdx.files.internal("data/textures/win/win3.png"));
+		winTex3.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		Texture winTex4 = new Texture(
+				Gdx.files.internal("data/textures/win/win4.png"));
+		winTex4.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		Texture winTex5 = new Texture(
+				Gdx.files.internal("data/textures/win/win5.png"));
+		winTex5.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		Texture winTex6 = new Texture(
+				Gdx.files.internal("data/textures/win/win6.png"));
+		winTex6.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		Texture winTex7 = new Texture(
+				Gdx.files.internal("data/textures/win/win7.png"));
+		winTex7.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
 		Texture heartDoor1 = new Texture(
 				Gdx.files.internal("data/textures/door/heart_door_left.png"));
 		heartDoor1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -275,6 +308,63 @@ public class GameScreen {
 			wallRight[i].setPosition(-wallRight[i].getWidth() / 2.0f,
 					-wallRight[i].getHeight() / 2.0f);
 		}
+		
+		region1 = new TextureRegion(winTex0, 0, 0, 512, 512);
+		win0 = new Sprite(region1);
+		win0.setSize(1.0f, 1.0f * win0.getHeight() / win0.getWidth());
+		win0.setOrigin(0.5f, 0.5f);
+		win0.setPosition(-win0.getWidth() / 2.0f,
+				-win0.getHeight() / 2.0f);
+		
+		region1 = new TextureRegion(winTex1, 0, 0, 512, 512);
+		win1 = new Sprite(region1);
+		win1.setSize(1.0f, 1.0f * win0.getHeight() / win0.getWidth());
+		win1.setOrigin(0.5f, 0.5f);
+		win1.setPosition(-win0.getWidth() / 2.0f,
+				-win0.getHeight() / 2.0f);
+		
+		region1 = new TextureRegion(winTex2, 0, 0, 512, 512);
+		win2 = new Sprite(region1);
+		win2.setSize(1.0f, 1.0f * win0.getHeight() / win0.getWidth());
+		win2.setOrigin(0.5f, 0.5f);
+		win2.setPosition(-win0.getWidth() / 2.0f,
+				-win0.getHeight() / 2.0f);
+		
+		region1 = new TextureRegion(winTex3, 0, 0, 512, 512);
+		win3 = new Sprite(region1);
+		win3.setSize(1.0f, 1.0f * win0.getHeight() / win0.getWidth());
+		win3.setOrigin(0.5f, 0.5f);
+		win3.setPosition(-win0.getWidth() / 2.0f,
+				-win0.getHeight() / 2.0f);
+		
+		region1 = new TextureRegion(winTex4, 0, 0, 512, 512);
+		win4 = new Sprite(region1);
+		win4.setSize(1.0f, 1.0f * win0.getHeight() / win0.getWidth());
+		win4.setOrigin(0.5f, 0.5f);
+		win4.setPosition(-win0.getWidth() / 2.0f,
+				-win0.getHeight() / 2.0f);
+		
+		region1 = new TextureRegion(winTex5, 0, 0, 512, 512);
+		win5 = new Sprite(region1);
+		win5.setSize(1.0f, 1.0f * win0.getHeight() / win0.getWidth());
+		win5.setOrigin(0.5f, 0.5f);
+		win5.setPosition(-win0.getWidth() / 2.0f,
+				-win0.getHeight() / 2.0f);
+		
+		region1 = new TextureRegion(winTex6, 0, 0, 512, 512);
+		win6 = new Sprite(region1);
+		win6.setSize(1.0f, 1.0f * win0.getHeight() / win0.getWidth());
+		win6.setOrigin(0.5f, 0.5f);
+		win6.setPosition(-win0.getWidth() / 2.0f,
+				-win0.getHeight() / 2.0f);
+		
+		region1 = new TextureRegion(winTex7, 0, 0, 512, 512);
+		win7 = new Sprite(region1);
+		win7.setSize(1.0f, 1.0f * win0.getHeight() / win0.getWidth());
+		win7.setOrigin(0.5f, 0.5f);
+		win7.setPosition(-win0.getWidth() / 2.0f,
+				-win0.getHeight() / 2.0f);
+		
 		region1 = new TextureRegion(heartDoor1, 0, 0, 800, 600);
 		heartDoorLeft = new Sprite(region1);
 		heartDoorLeft.setSize(1.0f, 1.0f * heartDoorLeft.getHeight() / heartDoorLeft.getWidth());
@@ -720,41 +810,44 @@ public class GameScreen {
 			}
 		} else {
 			if(testlevel.endGameAnime < maxAnimeTime){
-				wallLeft[0].rotate(testlevel.endGameAnime);
+				/*wallLeft[0].rotate(testlevel.endGameAnime);
 				wallLeft[0].draw(batch);
 				doorRight.rotate(testlevel.endGameAnime);
 				doorRight.draw(batch);
 				handOut.rotate(testlevel.endGameAnime);
-				handOut.draw(batch);
-				int frame = frameCounter / frameDivisor;
+				handOut.draw(batch);*/
+				int frame = frameCounter / 30;
 				switch (frame) {
 				case 0:
-					heart1.rotate(testlevel.endGameAnime);
-					heart1.draw(batch);
+					win0.draw(batch);
 					break;
 				case 1:
-					heart2.rotate(testlevel.endGameAnime);
-					heart2.draw(batch);
+					win1.draw(batch);
 					break;
 				case 2:
-					heart3.rotate(testlevel.endGameAnime);
-					heart3.draw(batch);
+					win2.draw(batch);
 					break;
 				case 3:
-					heart2.rotate(testlevel.endGameAnime);
-					heart2.draw(batch);
+					win3.draw(batch);
+					break;
+				case 4:
+					win4.draw(batch);
+					break;
+				case 5:
+					win5.draw(batch);
+					break;
+				case 6:
+					win6.draw(batch);
 					break;
 				default:
+					win7.draw(batch);
 					break;
 				}
 				frameCounter++;
-				if (frameCounter == (frameDivisor*4)) {
-					frameCounter = 0;
-				}
-				testlevel.endGameAnime++;
-			} else {
-				switchScreen = true;
-			}
+				if (frameCounter == 270) {
+					switchScreen = true;
+				}				
+			} 
 		}
 		batch.end();
 
