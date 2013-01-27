@@ -800,4 +800,10 @@ public class GameScreen {
 		System.out.println("Facing: " + nickCage.getDirection());
 	}
 
+	public void stopSound(){
+		heartbeat.stop();
+		beat.stop();
+		beat_up.stop();
+		beat_down.stop();
+	}
 }
