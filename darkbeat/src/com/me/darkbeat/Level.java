@@ -191,11 +191,11 @@ public class Level {
 	}
 	
 	public int bobBarker(double input){
-		if(input < .2) return 1;
-		else if(input < .4) return 2;
+		if(input < .2) return 5;
+		else if(input < .4) return 4;
 		else if(input < .6) return 3;
-		else if(input < .8) return 4;
-		else return 5;
+		else if(input < .8) return 2;
+		else return 1;
 	}
 
 }

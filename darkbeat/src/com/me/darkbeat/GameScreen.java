@@ -89,6 +89,7 @@ public class GameScreen {
 	private int frameDivisor = 7;
 	private int maxAnimeTime = 100;
 	private int heart_state;
+	private boolean didBeat;
 
 	public GameScreen() {
 		float w = Gdx.graphics.getWidth();
@@ -655,25 +656,56 @@ public class GameScreen {
 			}
 
 			if (nickCage.hasHeart) {
+				System.out.println("fear: " + nickCage.getFear());
+				switch(nickCage.getFear()){
+				case 1:
+					frameDivisor = 5;
+					break;
+				case 2:
+					frameDivisor = 6;
+					break;
+				case 3:
+					frameDivisor = 7;
+					break;
+				case 4:
+					frameDivisor = 10;
+					break;
+				case 5:
+					frameDivisor = 11;
+					break;
+				default:
+					System.out.println("Broken--fear: " + nickCage.getFear());
+					break;
+				}
 				int frame = frameCounter / frameDivisor;
 				switch (frame) {
 				case 0:
 					heart1.draw(batch);
+					if(!didBeat){
+						beat_up.play();
+						didBeat = true;
+					}
 					break;
 				case 1:
 					heart2.draw(batch);
+					didBeat = false;
 					break;
 				case 2:
 					heart3.draw(batch);
+					if(!didBeat){
+						beat_down.play();
+						didBeat = true;
+					}
 					break;
 				case 3:
 					heart2.draw(batch);
+					didBeat = false;
 					break;
 				default:
 					break;
 				}
 				frameCounter++;
-				if (frameCounter == (frameDivisor*4)) {
+				if (frameCounter >= (frameDivisor*4)) {
 					frameCounter = 0;
 				}
 			}

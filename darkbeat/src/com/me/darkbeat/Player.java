@@ -125,7 +125,7 @@ public class Player{
 		position = oldPos;
 	}
 	
-	public float getFear(){
+	public int getFear(){
 		return fear;
 	}
 	
