@@ -22,6 +22,9 @@ public class GameScreen {
 	private Sprite handRight;
 	private Sprite handLeft;
 	private Sprite handOut;
+	private Sprite doorFront;
+	private Sprite doorRight;
+	private Sprite doorLeft;
 	private Sprite catSprite;
 	private Sprite floor;
 	private int mapArray[] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
@@ -55,9 +58,8 @@ public class GameScreen {
 		camera = new OrthographicCamera(1, h / w);
 		batch = new SpriteBatch();
 
-		/*Sound heartBeat = Gdx.audio.newSound(Gdx.files.internal("data/sounds/heartBeat.mp3"));
-		Sound footSteps = Gdx.audio.newSound(Gdx.files.internal("data/sounds/footStep.mp3"));
-		Sound catSound = Gdx.audio.newSound(Gdx.files.internal("data/sounds/catSound.mp3"));
+		//Sound heartBeat = Gdx.audio.newSound(Gdx.files.internal("data/sounds/heartBeat.mp3"));
+		/*Sound catSound = Gdx.audio.newSound(Gdx.files.internal("data/sounds/catSound.mp3"));
 		Sound gruntSound = Gdx.audio.newSound(Gdx.files.internal("data/sounds/gruntSound.mp3"));
 		Sound hitWall = Gdx.audio.newSound(Gdx.files.internal("data/sounds/hitWall.mp3"));
 		Sound openDoorSound = Gdx.audio.newSound(Gdx.files.internal("data/sounds/openDoor.mp3"));
@@ -89,11 +91,26 @@ public class GameScreen {
 				.internal("data/textures/hands/hand_out.png"));
 		hand4Tex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
+		Texture doorTex1 = new Texture(
+				Gdx.files
+						.internal("data/textures/door/door_front.png"));
+		doorTex1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		Texture doorTex2 = new Texture(
+				Gdx.files
+						.internal("data/textures/door/door_left.png"));
+		doorTex2.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		Texture doorTex3 = new Texture(
+				Gdx.files
+						.internal("data/textures/door/door_right.png"));
+		doorTex3.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
 		Texture wallFrontTex1 = new Texture(
 				Gdx.files
 						.internal("data/textures/walls/stone_wall_1_front.png"));
 		wallFrontTex1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
+		
 		Texture wallFrontTex2 = new Texture(
 				Gdx.files
 						.internal("data/textures/walls/stone_wall_2_front.png"));
@@ -234,6 +251,30 @@ public class GameScreen {
 		handOut.setPosition(-handOut.getWidth() / 2.0f,
 				-handOut.getHeight() / 2.0f);
 		
+		region1 = new TextureRegion(doorTex1, 0, 0, 800, 600);
+		doorFront = new Sprite(region1);
+		doorFront.setSize(1f,
+				1f * doorFront.getHeight() / doorFront.getWidth());
+		doorFront.setOrigin(0.5f, 0.5f);
+		doorFront.setPosition(-doorFront.getWidth() / 2.0f,
+				-doorFront.getHeight() / 2.0f);
+		
+		region1 = new TextureRegion(doorTex2, 0, 0, 800, 600);
+		doorLeft = new Sprite(region1);
+		doorLeft.setSize(1f,
+				1f * doorLeft.getHeight() / doorLeft.getWidth());
+		doorLeft.setOrigin(0.5f, 0.5f);
+		doorLeft.setPosition(-doorLeft.getWidth() / 2.0f,
+				-doorLeft.getHeight() / 2.0f);
+		
+		region1 = new TextureRegion(doorTex3, 0, 0, 800, 600);
+		doorRight = new Sprite(region1);
+		doorRight.setSize(1f,
+				1f * doorRight.getHeight() / doorRight.getWidth());
+		doorRight.setOrigin(0.5f, 0.5f);
+		doorRight.setPosition(-doorRight.getWidth() / 2.0f,
+				-doorRight.getHeight() / 2.0f);
+		
 		floor = new Sprite(region2);
 		floor.setSize(0.5f, 0.5f * floor.getHeight() / floor.getWidth());
 		floor.setOrigin(0, 0);
@@ -322,15 +363,23 @@ public class GameScreen {
 		boolean frontWall = false;
 		switch (nickCage.getDirection()) {
 		case North:
+			left = testlevel.mapArray[nickCage.getPosition() - 1];
+			right = testlevel.mapArray[nickCage.getPosition() +1];
 			front = testlevel.mapArray[nickCage.getPosition() - testlevel.getWidth()];
 			break;
 		case South:
+			left = testlevel.mapArray[nickCage.getPosition() + 1];
+			right = testlevel.mapArray[nickCage.getPosition() - 1];
 			front = testlevel.mapArray[nickCage.getPosition() + testlevel.getWidth()];
 			break;
 		case East:
+			left = testlevel.mapArray[nickCage.getPosition() - testlevel.getWidth()];
+			right = testlevel.mapArray[nickCage.getPosition() + testlevel.getWidth()];
 			front = testlevel.mapArray[nickCage.getPosition() + 1];
 			break;
 		case West:
+			left = testlevel.mapArray[nickCage.getPosition() + testlevel.getWidth()];
+			right = testlevel.mapArray[nickCage.getPosition() - testlevel.getWidth()];
 			front = testlevel.mapArray[nickCage.getPosition() - 1];
 			break;
 		default:
@@ -340,9 +389,28 @@ public class GameScreen {
 		case 3:
 			catSprite.draw(batch);
 			break;
+		case 4:
+			doorFront.draw(batch);
+			break;			
+		default:
+			break;
+		} 
+		switch(left){
+		case 4:
+			doorLeft.draw(batch);
+			break;			
 		default:
 			break;
 		}
+		switch(right){
+		case 4:
+			doorRight.draw(batch);
+			break;			
+		default:
+			break;
+		}
+		left = 0;
+		right = 0;
 		front = 0;
 		switch (nickCage.getDirection()) {
 		case North:

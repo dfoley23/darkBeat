@@ -2,6 +2,7 @@ package com.me.darkbeat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 
 public class Player{
 	

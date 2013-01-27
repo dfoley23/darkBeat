@@ -7,21 +7,21 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class StartScreen {
-	public ArrayList<Sprite> uiElements;
-	public ArrayList<Vector2> uiElementsPos;
 	public ArrayList<Sprite> menuText;
 	public ArrayList<Vector2> menuTextPos;
+	private Sprite menuBall;
 	Choice currentChoice;
 	private boolean keyReleased = true;
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
-
-
 
 	public enum Choice {
 		start, quit;
@@ -34,22 +34,21 @@ public class StartScreen {
 		camera = new OrthographicCamera(1, h/w);
 		batch = new SpriteBatch();
 
-		uiElements = new ArrayList<Sprite>();
-		uiElementsPos = new ArrayList<Vector2>();
+		Texture tex1 = new Texture(Gdx.files.internal("data/menuBall.png"));
+		tex1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		TextureRegion region1 = new TextureRegion(tex1, 0, 0, 32, 32);
+		
+		menuBall = new Sprite(region1);
+		menuBall.setSize(0.05f, 0.05f * menuBall.getHeight() / menuBall.getWidth());
+		menuBall.setOrigin(0, 0);		
+		
 		menuText = new ArrayList<Sprite>();
 		menuTextPos = new ArrayList<Vector2>();
 		currentChoice = Choice.start;
 	}
 
 	public void update() {
-		for (int i = 0; i < uiElements.size(); i++) {
-			uiElements.get(i).setPosition(uiElementsPos.get(i).x,
-					uiElementsPos.get(i).y);
-		}
-		for (int i = 0; i < menuText.size(); i++) {
-			//menuText.get(i).setPosition(menuTextPos.get(i).x,
-				//	menuTextPos.get(i).y);
-		}		
 		if (keyReleased) {
 			if (Gdx.input.isKeyPressed(Keys.W)) {
 				switch (currentChoice) {
@@ -87,14 +86,13 @@ public class StartScreen {
 		
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		for (Sprite spr : uiElements) {
-			spr.draw(batch);
-		}
 		for (int i = 0; i < menuText.size(); i++) {
 			switch (i) {
 			case 0:
 				if (currentChoice == Choice.start) {
-					menuText.get(i).setColor(Color.RED);
+					menuText.get(i).setColor(Color.WHITE);
+					menuBall.setPosition(menuText.get(i).getX()-0.07f, menuText.get(i).getY());
+					menuBall.draw(batch);
 					menuText.get(i).draw(batch);
 				} else {
 					menuText.get(i).setColor(Color.GRAY);
@@ -103,7 +101,9 @@ public class StartScreen {
 				break;
 			case 1:
 				if (currentChoice == Choice.quit) {
-					menuText.get(i).setColor(Color.RED);
+					menuText.get(i).setColor(Color.WHITE);
+					menuBall.setPosition(menuText.get(i).getX()-0.07f, menuText.get(i).getY());
+					menuBall.draw(batch);
 					menuText.get(i).draw(batch);
 				} else {
 					menuText.get(i).setColor(Color.GRAY);
@@ -111,15 +111,12 @@ public class StartScreen {
 				}
 				break;
 			default:
+				menuText.get(i).setColor(Color.GRAY);
+				menuText.get(i).draw(batch);
 				break;
 			}
 		}
 		batch.end();
-	}
-
-	public void addElement(Sprite spr, Vector2 pos) {
-		uiElements.add(spr);
-		uiElementsPos.add(pos);
 	}
 
 	public void addMenuItem(Sprite spr, Vector2 pos) {
