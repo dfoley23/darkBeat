@@ -73,6 +73,7 @@ public class Level {
 	 */
 
 	public void checkPlayer(Player player, int heart) {
+		long id;
 		if (!player.isAtDoor && doorPos > 0
 				&& mapArray[player.getPosition()] != 5) {
 			mapArray[doorPos] = 4;
@@ -85,28 +86,34 @@ public class Level {
 				switch (player.getDirection()) {
 				case North:
 					mapArray[player.getPosition()] = 4;
+					mapArray[player.oldPos] = 0;
 					player.setPosition(player.getPosition() - width);
 					break;
 				case South:
+					mapArray[player.oldPos] = 0;
 					mapArray[player.getPosition()] = 4;
 					player.setPosition(player.getPosition() + width);
 					break;
 				case East:
+					mapArray[player.oldPos] = 0;
 					mapArray[player.getPosition()] = 4;
 					player.setPosition(player.getPosition() + 1);
 					break;
 				case West:
+					mapArray[player.oldPos] = 0;
 					mapArray[player.getPosition()] = 4;
 					player.setPosition(player.getPosition() - 1);
 					break;
 				}
 			} else if (mapArray[player.getPosition()] == 3) {
-				catMEOW.play(0.6f);
+				catMEOW.play(0.25f);
+				mapArray[player.getOldPosition()] = 0;
 				hitCat = true;
 			} else {
 				mapArray[player.getOldPosition()] = 0;
 				mapArray[player.getPosition()] = 2;
-				footSteps.play(0.3f);
+				id = footSteps.play(1.0f);
+				footSteps.setVolume(id, 0.015f);
 			}
 		} else {
 			switch (mapArray[player.getPosition()]) {
@@ -116,7 +123,7 @@ public class Level {
 				break;
 			case 4:
 				mapArray[player.getPosition()] = 5;
-				openDoor.play(0.6f);
+				openDoor.play(0.025f);
 				doorPos = player.getPosition();
 				player.isAtDoor = true;
 				break;
@@ -130,7 +137,8 @@ public class Level {
 				mapArray[player.getPosition()] = 0;
 				player.hasHeart = true;
 				player.setVolume(1.0f);
-				ohYeah.play();
+				long id2 = ohYeah.play();
+				ohYeah.setVolume(id2, 0.035f);
 				break;
 			case 9:
 				break;

@@ -11,7 +11,7 @@ public class Player{
 	private float volume;
 	private Direction dir;
 	private int mapWidth;
-	private int oldPos;
+	public int oldPos;
 	public boolean changedPosition;
 	public boolean changedDirection;
 	public boolean hasHeart;
@@ -115,7 +115,7 @@ public class Player{
 	
 	private void setAtDoor(){
 		if(isAtDoor){
-			closeDoor.play(0.6f);
+			closeDoor.play(0.025f);
 		}
 		isAtDoor = false;
 	}

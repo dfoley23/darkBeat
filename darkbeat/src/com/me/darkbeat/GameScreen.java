@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.me.darkbeat.Player.Direction;
 
 public class GameScreen {
 	private OrthographicCamera camera;
@@ -27,55 +28,86 @@ public class GameScreen {
 	private Sprite doorRight;
 	private Sprite doorLeft;
 	private Sprite catSprite;
+	private Sprite heart1;
+	private Sprite heart2;
+	private Sprite heart3;
 	private Sprite floor;
 	private Music heartbeat;
-	private int mapArray[] = { 
-			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
-			1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 
-			1, 0, 0, 0, 0, 0, 0, 1, 0, 1,
-			1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0,
-			0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0,
-			0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
-			0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
-			1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1,
-			0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1,
-			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+//	private int test[] = { //14 x 10
+//			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+//			1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 4, 0, 1, 
+//			1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+//			1, 0, 0, 0, 0, 0, 1, 0, 0, 3, 0, 4, 3, 1,
+//			1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 3, 1, 
+//			1, 1, 1, 1, 4, 1, 1, 1, 1, 4, 1, 1, 1, 1, 
+//			1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
+//			1, 0, 0, 3, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
+//			1, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 1,
+//			1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
+//			1, 0, 0, 8, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1,
+//			1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1,
+//			1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1,
+//			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, };
+	private int test[] = { //14 x 10
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+	1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 4, 3, 1, 
+	1, 1, 0, 0, 0, 0, 0, 4, 0, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1,
+	1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 
+	1, 1, 1, 1, 4, 1, 1, 1, 3, 0, 0, 0, 0, 1, 
+	1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1,
+	1, 0, 0, 3, 0, 0, 0, 1, 1, 1, 1, 1, 4, 1,
+	1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
+	1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
+	1, 0, 0, 8, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
+	1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 8, 0, 1,
+	1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, };
 
 	private Player nickCage;
 	private Level testlevel;
 	private int lWidth;
 	private int lHeight;
-	private int[] test = new int[100];
 	private int[] textureArray = new int[test.length];
 	private int numCats;
 	private Cat[] cats;
 	private int heartPosition = 64;
+	private  int catCounter = 0;
+	private int frameCounter = 0;
 
 	public GameScreen() {
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 
-		lWidth = 10;
-		lHeight = 10;
+		lWidth = 14;
+		lHeight = 14;
 
 		numCats = 1;
 
 		camera = new OrthographicCamera(1, h / w);
 		batch = new SpriteBatch();
 
-		//Sound heartBeat = Gdx.audio.newSound(Gdx.files.internal("data/sounds/heartBeat.mp3"));
-		/*Sound catSound = Gdx.audio.newSound(Gdx.files.internal("data/sounds/catSound.mp3"));
-		Sound gruntSound = Gdx.audio.newSound(Gdx.files.internal("data/sounds/gruntSound.mp3"));
-		Sound hitWall = Gdx.audio.newSound(Gdx.files.internal("data/sounds/hitWall.mp3"));
-		Sound openDoorSound = Gdx.audio.newSound(Gdx.files.internal("data/sounds/openDoor.mp3"));
-		Sound closeDoorSound = Gdx.audio.newSound(Gdx.files.internal("data/sounds/closeDoor.mp3"));*/
-		
 		heartbeat = Gdx.audio.newMusic(Gdx.files.internal("data/sounds/Heartbeat.ogg"));
 		
 		heartbeat.setLooping(true);
 		heartbeat.setVolume(0.0f);
 		heartbeat.play();
 		
+		Texture heartTex1 = new Texture(
+				Gdx.files
+				.internal("data/textures/hands/hand_heart_0.png"));
+		heartTex1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+		Texture heartTex2 = new Texture(
+				Gdx.files
+				.internal("data/textures/hands/hand_heart_1.png"));
+		heartTex2.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		Texture heartTex3 = new Texture(
+				Gdx.files
+				.internal("data/textures/hands/hand_heart_2.png"));
+		heartTex3.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
 		Texture catTex = new Texture(
 				Gdx.files
 						.internal("data/textures/misc/cat.png"));
@@ -174,8 +206,6 @@ public class GameScreen {
 						.internal("data/textures/walls/stone_wall_4_right.png"));
 		wallRightTex4.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
-		Texture floorTex = new Texture(Gdx.files.internal("data/floor.png"));
-
 		TextureRegion region1 = new TextureRegion(wallFrontTex1, 0, 0, 800, 600);
 		TextureRegion region2 = new TextureRegion(wallLeftTex1, 0, 0, 800, 600);
 		TextureRegion region3 = new TextureRegion(wallRightTex1, 0, 0, 800, 600);
@@ -222,11 +252,35 @@ public class GameScreen {
 			wallRight[i].setPosition(-wallRight[i].getWidth() / 2.0f,
 					-wallRight[i].getHeight() / 2.0f);
 		}
+
+		region1 = new TextureRegion(heartTex1, 0, 0, 800, 600);
+		heart1 = new Sprite(region1);
+		heart1.setSize(1.0f,
+				1.0f * heart1.getHeight() / heart1.getWidth());
+		heart1.setOrigin(0.5f, 0.5f);
+		heart1.setPosition(-heart1.getWidth() / 2.0f,
+				-heart1.getHeight() / 2.0f);
+
+		region1 = new TextureRegion(heartTex2, 0, 0, 800, 600);
+		heart2 = new Sprite(region1);
+		heart2.setSize(1.0f,
+				1.0f * heart2.getHeight() / heart2.getWidth());
+		heart2.setOrigin(0.5f, 0.5f);
+		heart2.setPosition(-heart2.getWidth() / 2.0f,
+				-heart2.getHeight() / 2.0f);
+
+		region1 = new TextureRegion(heartTex3, 0, 0, 800, 600);
+		heart3 = new Sprite(region1);
+		heart3.setSize(1.0f,
+				1.0f * heart3.getHeight() / heart3.getWidth());
+		heart3.setOrigin(0.5f, 0.5f);
+		heart3.setPosition(-heart3.getWidth() / 2.0f,
+				-heart3.getHeight() / 2.0f);
 		
-		region1 = new TextureRegion(catTex, 0, 0, 64, 64);
+		region1 = new TextureRegion(catTex, 0, 0, 800, 600);
 		catSprite = new Sprite(region1);
-		catSprite.setSize(0.25f,
-				0.25f * catSprite.getHeight() / catSprite.getWidth());
+		catSprite.setSize(1.0f,
+				1.0f * catSprite.getHeight() / catSprite.getWidth());
 		catSprite.setOrigin(0.5f, 0.5f);
 		catSprite.setPosition(-catSprite.getWidth() / 2.0f,
 				-catSprite.getHeight() / 2.0f+0.2f);
@@ -291,7 +345,7 @@ public class GameScreen {
 		floor.setSize(0.5f, 0.5f * floor.getHeight() / floor.getWidth());
 		floor.setOrigin(0, 0);
 
-		for (int i = 0; i < 10; i++) {
+		/*for (int i = 0; i < 10; i++) {
 			test[i] = 1;
 		}
 		for (int i = 10; i < 90; i++) {
@@ -307,18 +361,17 @@ public class GameScreen {
 		}
 		for (int i = 90; i < 100; i++) {
 			test[i] = 1;
-		}
-
-		for(int i=0; i<test.length; i++){
-			textureArray[i] = test[i];
-		}
-
-		test[36] = 3;
-		test[49] = 4;
-		test[heartPosition] = 8;
-		test[11] = 4;
+		}*/
 		
-		nickCage = new Player(45, 10);
+		for(int i=0; i<test.length; i++){
+			if(test[i] == 1){
+				textureArray[i] = test[i];
+			} else {
+				textureArray[i] = 0;
+			}
+		}
+
+		nickCage = new Player(15, 14);
 		testlevel = new Level(lWidth, lHeight, test);
 
 		cats = testlevel.setCats();
@@ -331,18 +384,17 @@ public class GameScreen {
 			}
 		}
 
-		nickCage = new Player(45, 10);
+		nickCage.setDirection(Direction.West);
 
 		testlevel = new Level(lWidth, lHeight, test);
 
-		// testDraw();
+		 testDraw();
 
 	}
 
 	public void update() {
 		nickCage.update();
 		if (nickCage.changedPosition) {
-			testlevel.checkPlayer(nickCage, heartPosition);
 			nickCage.changedPosition = false;
 			if (cats.length > 0) {
 				for (int c = 0; c < cats.length; c++) {
@@ -351,6 +403,7 @@ public class GameScreen {
 					cats[c].move();
 				}
 			}
+			testlevel.checkPlayer(nickCage, heartPosition);
 			testDraw();
 		} else if (nickCage.changedDirection) {
 			if(!nickCage.isAtDoor && testlevel.doorPos > 0){ 
@@ -358,13 +411,13 @@ public class GameScreen {
 				testlevel.doorPos = -1;
 			}
 			nickCage.changedDirection = false;
-			if (cats.length > 0) {
+			/*if (cats.length > 0) {
 				for (int c = 0; c < cats.length; c++) {
 					System.out.println("len: " + cats.length + " pos: "
 							+ cats[c].getPosition());
 					cats[c].move();
 				}
-			}
+			}*/
 			testDraw();
 		}
 		heartbeat.setVolume(nickCage.getVolume());
@@ -410,16 +463,15 @@ public class GameScreen {
 		default:
 			break;
 		}
+
 		switch(front){
-		case 3:
-			if(testlevel.hitCat){
-				catSprite.draw(batch);
-			}
-			break;
 		case 4:
 			frontWall = true;
 			doorFront.draw(batch);
-			break;			
+			break;	
+		case 5:
+			doorRight.draw(batch);
+			rightWall = true;
 		default:
 			break;
 		} 
@@ -537,6 +589,39 @@ public class GameScreen {
 			handLeft.draw(batch);
 		} else {
 			handOut.draw(batch);
+		}
+
+		if(nickCage.hasHeart){
+			int frame = frameCounter / 7;
+			switch(frame){
+			case 0:
+				heart1.draw(batch);
+				break;
+			case 1:
+				heart2.draw(batch);
+				break;
+			case 2:
+				heart3.draw(batch);
+				break;
+			case 3:
+				heart2.draw(batch);
+				break;
+			default:
+				break;
+			}
+			frameCounter++;
+			if(frameCounter == 28){
+				frameCounter = 0;
+			}
+		}
+		
+		if(testlevel.hitCat && catCounter == 0){
+			catCounter = 30;
+			testlevel.hitCat = false;
+		}
+		if(catCounter != 0){
+			catSprite.draw(batch);
+			catCounter --;
 		}
 		
 		batch.end();
