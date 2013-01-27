@@ -6,6 +6,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -34,6 +35,8 @@ public class GameScreen {
 	private Sprite heart3;
 	private Sprite floor;
 	private Music heartbeat;
+	private Sound beat;
+	private long beat_id;
 	// private int test[] = { //14 x 10
 	// 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 	// 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 4, 0, 1,
@@ -74,7 +77,7 @@ public class GameScreen {
 	private int heartPosition;
 	private int catCounter = 0;
 	private int frameCounter = 0;
-	private int frameDivisor;
+	private int frameDivisor = 7;
 
 	public GameScreen() {
 		float w = Gdx.graphics.getWidth();
@@ -91,7 +94,12 @@ public class GameScreen {
 
 		heartbeat.setLooping(true);
 		heartbeat.setVolume(0.0f);
-		heartbeat.play();
+		//heartbeat.play();
+		
+		beat = Gdx.audio.newSound(Gdx.files.internal("data/sounds/Heart_beat1.wav"));
+		beat_id = beat.play();
+		beat.setLooping(beat_id, true);
+		beat.setVolume(beat_id, 0.0f);
 
 		Texture heartTex1 = new Texture(
 				Gdx.files.internal("data/textures/hands/hand_heart_0.png"));
@@ -394,6 +402,7 @@ public class GameScreen {
 				testDraw();
 			}
 			heartbeat.setVolume(nickCage.getVolume());
+			beat.setVolume(beat_id, nickCage.getVolume());
 		}
 	}
 
