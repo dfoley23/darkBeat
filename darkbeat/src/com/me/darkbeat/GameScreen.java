@@ -6,6 +6,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -32,8 +33,11 @@ public class GameScreen {
 	private Sprite heart1;
 	private Sprite heart2;
 	private Sprite heart3;
-	private Sprite floor;
+	private Sprite heartDoorLeft;
+	private Sprite heartDoorRight;
+	private Sprite heartDoorFront;
 	private Music heartbeat;
+	public boolean switchScreen = false;
 	// private int test[] = { //14 x 10
 	// 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 	// 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 4, 0, 1,
@@ -60,8 +64,8 @@ public class GameScreen {
 	1, 0, 0, 3, 0, 0, 0, 1, 1, 1, 1, 1, 4, 1, 
 	1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 
 	1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 
-	1, 0, 0, 8, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 
-	1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 8, 0, 1, 
+	9, 0, 0, 8, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 
+	1, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 8, 0, 1, 
 	1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, };
 
@@ -74,7 +78,8 @@ public class GameScreen {
 	private int heartPosition;
 	private int catCounter = 0;
 	private int frameCounter = 0;
-	private int frameDivisor;
+	private int frameDivisor = 7;
+	private int maxAnimeTime = 100;
 
 	public GameScreen() {
 		float w = Gdx.graphics.getWidth();
@@ -92,6 +97,18 @@ public class GameScreen {
 		heartbeat.setLooping(true);
 		heartbeat.setVolume(0.0f);
 		heartbeat.play();
+
+		Texture heartDoor1 = new Texture(
+				Gdx.files.internal("data/textures/door/door_left.png"));
+		heartDoor1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+		Texture heartDoor2 = new Texture(
+				Gdx.files.internal("data/textures/door/door_right.png"));
+		heartDoor2.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+		Texture heartDoor3 = new Texture(
+				Gdx.files.internal("data/textures/door/door_front.png"));
+		heartDoor3.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
 		Texture heartTex1 = new Texture(
 				Gdx.files.internal("data/textures/hands/hand_heart_0.png"));
@@ -240,7 +257,27 @@ public class GameScreen {
 			wallRight[i].setPosition(-wallRight[i].getWidth() / 2.0f,
 					-wallRight[i].getHeight() / 2.0f);
 		}
-
+		region1 = new TextureRegion(heartDoor1, 0, 0, 800, 600);
+		heartDoorLeft = new Sprite(region1);
+		heartDoorLeft.setSize(1.0f, 1.0f * heartDoorLeft.getHeight() / heartDoorLeft.getWidth());
+		heartDoorLeft.setOrigin(0.5f, 0.5f);
+		heartDoorLeft.setPosition(-heartDoorLeft.getWidth() / 2.0f,
+				-heartDoorLeft.getHeight() / 2.0f);
+		
+		region1 = new TextureRegion(heartDoor2, 0, 0, 800, 600);
+		heartDoorRight = new Sprite(region1);
+		heartDoorRight.setSize(1.0f, 1.0f * heartDoorRight.getHeight() / heartDoorRight.getWidth());
+		heartDoorRight.setOrigin(0.5f, 0.5f);
+		heartDoorRight.setPosition(-heartDoorRight.getWidth() / 2.0f,
+				-heartDoorRight.getHeight() / 2.0f);
+		
+		region1 = new TextureRegion(heartDoor3, 0, 0, 800, 600);
+		heartDoorFront = new Sprite(region1);
+		heartDoorFront.setSize(1.0f, 1.0f * heartDoorFront.getHeight() / heartDoorFront.getWidth());
+		heartDoorFront.setOrigin(0.5f, 0.5f);
+		heartDoorFront.setPosition(-heartDoorFront.getWidth() / 2.0f,
+				-heartDoorFront.getHeight() / 2.0f);
+		
 		region1 = new TextureRegion(heartTex1, 0, 0, 800, 600);
 		heart1 = new Sprite(region1);
 		heart1.setSize(1.0f, 1.0f * heart1.getHeight() / heart1.getWidth());
@@ -322,10 +359,6 @@ public class GameScreen {
 		doorRight.setOrigin(0.5f, 0.5f);
 		doorRight.setPosition(-doorRight.getWidth() / 2.0f,
 				-doorRight.getHeight() / 2.0f);
-
-		floor = new Sprite(region2);
-		floor.setSize(0.5f, 0.5f * floor.getHeight() / floor.getWidth());
-		floor.setOrigin(0, 0);
 
 		/*
 		 * for (int i = 0; i < 10; i++) { test[i] = 1; } for (int i = 10; i <
@@ -453,6 +486,12 @@ public class GameScreen {
 			case 5:
 				doorRight.draw(batch);
 				rightWall = true;
+				break;
+			case 9:
+				frontWall = true;
+				heartDoorFront.setColor(Color.RED);
+				heartDoorFront.draw(batch);
+				break;
 			default:
 				break;
 			}
@@ -461,6 +500,11 @@ public class GameScreen {
 				leftWall = true;
 				doorLeft.draw(batch);
 				break;
+			case 9:
+				leftWall = true;
+				heartDoorLeft.setColor(Color.RED);
+				heartDoorLeft.draw(batch);
+				break;
 			default:
 				break;
 			}
@@ -468,6 +512,11 @@ public class GameScreen {
 			case 4:
 				rightWall = true;
 				doorRight.draw(batch);
+				break;
+			case 9:
+				rightWall = true;
+				heartDoorRight.setColor(Color.RED);
+				heartDoorRight.draw(batch);
 				break;
 			default:
 				break;
@@ -611,7 +660,42 @@ public class GameScreen {
 				catCounter--;
 			}
 		} else {
-			// TODO: endgame stuff
+			if(testlevel.endGameAnime < maxAnimeTime){
+				wallLeft[0].rotate(testlevel.endGameAnime);
+				wallLeft[0].draw(batch);
+				doorRight.rotate(testlevel.endGameAnime);
+				doorRight.draw(batch);
+				handOut.rotate(testlevel.endGameAnime);
+				handOut.draw(batch);
+				int frame = frameCounter / frameDivisor;
+				switch (frame) {
+				case 0:
+					heart1.rotate(testlevel.endGameAnime);
+					heart1.draw(batch);
+					break;
+				case 1:
+					heart2.rotate(testlevel.endGameAnime);
+					heart2.draw(batch);
+					break;
+				case 2:
+					heart3.rotate(testlevel.endGameAnime);
+					heart3.draw(batch);
+					break;
+				case 3:
+					heart2.rotate(testlevel.endGameAnime);
+					heart2.draw(batch);
+					break;
+				default:
+					break;
+				}
+				frameCounter++;
+				if (frameCounter == (frameDivisor*4)) {
+					frameCounter = 0;
+				}
+				testlevel.endGameAnime++;
+			} else {
+				switchScreen = true;
+			}
 		}
 		batch.end();
 
