@@ -1361,3 +1361,16 @@ org.eclipse.core.runtime.CoreException: The file does not exist.
 !ENTRY org.eclipse.m2e.logback.appender 4 0 2013-01-26 09:57:40.028
 !MESSAGE Failed to open search index.
 >>>>>>> ca7f6725c1d461d9e51e26474cf0fbdb0eaefac7
+!SESSION 2013-01-26 18:56:21.297 -----------------------------------------------
+eclipse.buildId=M20120914-1800
+java.version=1.6.0_24
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86, WS=cocoa, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.jee.product -keyring /Users/crono/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86 -product org.eclipse.epp.package.jee.product -keyring /Users/crono/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2013-01-26 18:56:32.440
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.ui 4 4 2013-01-26 18:56:34.465
+!MESSAGE Unable to find Action Set: org.eclipse.wb.core.ui.actionset

@@ -8,7 +8,7 @@ public class Level{
 	public int mapArray[];
 	private int height;
 	private int width;
-	
+	private Sound footSteps;
 	private Sound ohYeah;
 	
 	public Level(int levelWidth, int levelHeight, int level[]){
@@ -16,32 +16,35 @@ public class Level{
 		mapArray = level;
 		height = levelHeight;
 		width = levelWidth;
+		footSteps = Gdx.audio.newSound(Gdx.files
+				.internal("data/sounds/footsteps.ogg"));
+
 	}
-	
-	public int getHeight(){
+
+	public int getHeight() {
 		return height;
 	}
-	
-	public int getWidth(){
+
+	public int getWidth() {
 		return width;
 	}
-	
-	public void switchEnemy(int newIndex, int oldIndex, int category){
+
+	public void switchEnemy(int newIndex, int oldIndex, int category) {
 		mapArray[oldIndex] = 0;
 		mapArray[newIndex] = category;
 	}
-	
-	public Cat[] setCats(){
+
+	public Cat[] setCats() {
 		int count = 0;
-		for(int i = 0; i < (width * height); i++){
-			if(mapArray[i] == 3){
+		for (int i = 0; i < (width * height); i++) {
+			if (mapArray[i] == 3) {
 				count++;
 			}
 		}
 		Cat[] catList = new Cat[count];
 		int catNumber = 0;
-		for(int i = 0; i < (width * height); i++){
-			if(mapArray[i] == 3){
+		for (int i = 0; i < (width * height); i++) {
+			if (mapArray[i] == 3) {
 				catList[catNumber] = new Cat(i, this);
 				catNumber++;
 			}
@@ -62,12 +65,13 @@ public class Level{
 	 * 9: End goal
 	 */
 	
-	public void checkPlayer(Player player){
-		if(mapArray[player.getPosition()] == 0) {
+	public void checkPlayer(Player player) {
+		if (mapArray[player.getPosition()] == 0) {
 			mapArray[player.getOldPosition()] = 0;
 			mapArray[player.getPosition()] = 2;
+			footSteps.play(1.0f);
 		} else {
-			switch (mapArray[player.getPosition()]){
+			switch (mapArray[player.getPosition()]) {
 			case 1:
 				break;
 			case 2:
