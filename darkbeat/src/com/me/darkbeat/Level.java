@@ -15,6 +15,7 @@ public class Level {
 	private Sound catMEOW;
 	public int doorPos;
 	public boolean hitCat = false;
+	public boolean endGame = false;
 
 	public Level(int levelWidth, int levelHeight, int level[]) {
 		ohYeah = Gdx.audio.newSound(Gdx.files
@@ -141,11 +142,17 @@ public class Level {
 				ohYeah.setVolume(id2, 0.035f);
 				break;
 			case 9:
+				if(player.hasHeart){
+					openDoor.play(0.045f);
+					endGame = true;
+				}
 				break;
 			default:
 				break;
 			}
-			player.setPosition(player.getOldPosition());
+			if(!endGame){
+				player.setPosition(player.getOldPosition());
+			}
 		}
 		if (!player.hasHeart) {
 			int heartOffset_x = (player.getPosition() % width)
