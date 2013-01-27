@@ -50,8 +50,8 @@ public class GameScreen {
 //			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, };
 	private int test[] = { //14 x 10
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
-	1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 4, 3, 1, 
-	1, 1, 0, 0, 0, 0, 0, 4, 0, 1, 1, 1, 1, 1,
+	1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 4, 3, 1, 
+	1, 1, 0, 4, 0, 0, 0, 4, 0, 1, 1, 1, 1, 1,
 	1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1,
 	1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 
 	1, 1, 1, 1, 4, 1, 1, 1, 3, 0, 0, 0, 0, 1, 
@@ -71,7 +71,7 @@ public class GameScreen {
 	private int[] textureArray = new int[test.length];
 	private int numCats;
 	private Cat[] cats;
-	private int heartPosition = 64;
+	private int heartPosition;
 	private  int catCounter = 0;
 	private int frameCounter = 0;
 
@@ -368,10 +368,13 @@ public class GameScreen {
 				textureArray[i] = test[i];
 			} else {
 				textureArray[i] = 0;
+				if(test[i] == 8){
+					heartPosition = i;
+				}
 			}
 		}
 
-		nickCage = new Player(15, 14);
+		nickCage = new Player(15, lWidth);
 		testlevel = new Level(lWidth, lHeight, test);
 
 		cats = testlevel.setCats();

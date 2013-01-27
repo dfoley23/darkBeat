@@ -152,9 +152,10 @@ public class Level {
 					- (heart % width);
 			int heartOffset_y = (player.getPosition() / width)
 					- (heart / width);
+			System.out.println("x: " + heartOffset_x + " y: " + heartOffset_y);
 			double distance = Math.sqrt(Math.pow(heartOffset_x, 2)
 					+ Math.pow(heartOffset_y, 2));
-			if (distance > maxDistance / 3.0) {
+			if (distance > maxDistance / 2.0) {
 				player.setVolume(0.0f);
 			} else {
 				distance = distance / maxDistance;
