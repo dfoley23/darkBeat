@@ -39,6 +39,9 @@ public class GameScreen {
 	private Sprite heartDoorFront;
 	private Music heartbeat;
 	private Sound beat;
+	private Sound beat_up;
+	private Sound beat_down;
+	
 	private long beat_id;
 	public boolean switchScreen = false;
 
@@ -62,10 +65,10 @@ public class GameScreen {
 	1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 4, 3, 1, 
 	1, 1, 0, 4, 0, 0, 0, 4, 0, 1, 1, 1, 1, 1, 
 	1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 
-	1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1,
-	1, 1, 1, 1, 4, 1, 1, 1, 3, 0, 0, 0, 0, 1,
-	1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1,
-	1, 0, 0, 3, 0, 0, 0, 1, 1, 1, 1, 1, 4, 1, 
+	1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1,
+	1, 1, 1, 1, 4, 1, 0, 1, 1, 3, 0, 0, 0, 1,
+	1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1,
+	1, 0, 0, 3, 0, 0, 0, 0, 1, 1, 1, 1, 4, 1, 
 	1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 
 	1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 
 	9, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 
@@ -80,10 +83,12 @@ public class GameScreen {
 	private int[] textureArray = new int[test.length];
 	private Cat[] cats;
 	private int heartPosition;
+	private int endDoorPosition;
 	private int catCounter = 0;
 	private int frameCounter = 0;
 	private int frameDivisor = 7;
 	private int maxAnimeTime = 100;
+	private int heart_state;
 
 	public GameScreen() {
 		float w = Gdx.graphics.getWidth();
@@ -102,10 +107,13 @@ public class GameScreen {
 		heartbeat.setVolume(0.0f);
 		//heartbeat.play();
 		
-		beat = Gdx.audio.newSound(Gdx.files.internal("data/sounds/Heart_beat1.wav"));
+		beat = Gdx.audio.newSound(Gdx.files.internal("data/sounds/h.ogg"));
 		beat_id = beat.play();
 		beat.setLooping(beat_id, true);
 		beat.setVolume(beat_id, 0.0f);
+		
+		beat_up = Gdx.audio.newSound(Gdx.files.internal("data/sounds/h1.ogg"));
+		beat_down = Gdx.audio.newSound(Gdx.files.internal("data/sounds/h2.ogg"));
 
 		Texture heartDoor1 = new Texture(
 				Gdx.files.internal("data/textures/door/door_left.png"));
@@ -384,6 +392,9 @@ public class GameScreen {
 				if (test[i] == 8) {
 					heartPosition = i;
 				}
+				if (test[i] == 9) {
+					endDoorPosition = i;
+				}
 			}
 		}
 
@@ -420,7 +431,7 @@ public class GameScreen {
 						cats[c].move();
 					}
 				}
-				testlevel.checkPlayer(nickCage, heartPosition);
+				testlevel.checkPlayer(nickCage, heartPosition, endDoorPosition);
 				testDraw();
 			} else if (nickCage.changedDirection) {
 				if (!nickCage.isAtDoor && testlevel.doorPos > 0) {
@@ -435,8 +446,14 @@ public class GameScreen {
 				 */
 				testDraw();
 			}
-			heartbeat.setVolume(nickCage.getVolume());
-			beat.setVolume(beat_id, nickCage.getVolume());
+			if(!nickCage.hasHeart){
+				heartbeat.setVolume(nickCage.getVolume());
+				beat.setVolume(beat_id, nickCage.getVolume());
+			}
+			else{
+				heartbeat.setVolume(0.0f);
+				beat.setVolume(beat_id, 0.0f);	
+			}
 		}
 	}
 
@@ -642,7 +659,7 @@ public class GameScreen {
 				switch (frame) {
 				case 0:
 					heart1.draw(batch);
-					break;
+					break; 
 				case 1:
 					heart2.draw(batch);
 					break;
@@ -751,4 +768,10 @@ public class GameScreen {
 		System.out.println("Facing: " + nickCage.getDirection());
 	}
 
+	public void stopSound(){
+		heartbeat.stop();
+		beat.stop();
+		beat_up.stop();
+		beat_down.stop();
+	}
 }

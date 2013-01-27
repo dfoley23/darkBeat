@@ -7,7 +7,7 @@ import com.badlogic.gdx.audio.Sound;
 public class Player{
 	
 	private int position;
-	private float fear;
+	private int fear;
 	private float volume;
 	private Direction dir;
 	private int mapWidth;
@@ -27,7 +27,7 @@ public class Player{
 	
 	public Player(int startingPosition, int width) {
 		oldPos = position = startingPosition;
-		fear = 0.0f;
+		fear = 0;
 		dir = Direction.East;
 		mapWidth = width;
 		changedDirection = true;
@@ -129,7 +129,7 @@ public class Player{
 		return fear;
 	}
 	
-	public void setFear(float newFear){
+	public void setFear(int newFear){
 		fear = newFear;
 	}
 	

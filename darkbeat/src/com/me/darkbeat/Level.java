@@ -74,7 +74,7 @@ public class Level {
 	 * 8: Heart 9: End goal
 	 */
 
-	public void checkPlayer(Player player, int heart) {
+	public void checkPlayer(Player player, int heart, int endDoor) {
 		long id;
 		if (!player.isAtDoor && doorPos > 0
 				&& mapArray[player.getPosition()] != 5) {
@@ -168,18 +168,34 @@ public class Level {
 				player.setVolume(0.0f);
 			} else {
 				distance = distance / maxDistance;
-				System.out.println("d1: " + distance);
 				distance = 1.0 - distance;
-				System.out.println("d2: " + distance);
 				distance = Math.pow(distance, 8);
-				System.out.println("d3: " + distance);
 				player.setVolume((float) distance);
-				System.out.println("h.x: " + heartOffset_x + " h.y: "
-						+ heartOffset_y);
-			}
-		} else 
+							}
+		} else{
 			player.setVolume(1.0f);
+			int endDoorOffset_x = (player.getPosition() % width)
+					- (endDoor % width);
+			int endDoorOffset_y = (player.getPosition() / width)
+					- (endDoor / width);
+			System.out.println("x: " + endDoorOffset_x + " y: " + endDoorOffset_y);
+			double distance = Math.sqrt(Math.pow(endDoorOffset_x, 2)
+					+ Math.pow(endDoorOffset_y, 2));
+			distance = distance / maxDistance;
+			distance = 1.0 - distance;
+			distance = Math.pow(distance, 3);
+			player.setFear(bobBarker(distance));
+			System.out.println("dist: " + distance + " bob: " + bobBarker(distance));
+		}
 		System.out.println("player pos: " + player.getPosition());
+	}
+	
+	public int bobBarker(double input){
+		if(input < .2) return 1;
+		else if(input < .4) return 2;
+		else if(input < .6) return 3;
+		else if(input < .8) return 4;
+		else return 5;
 	}
 
 }

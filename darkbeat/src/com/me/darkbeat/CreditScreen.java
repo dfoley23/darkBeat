@@ -3,6 +3,7 @@ package com.me.darkbeat;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -22,6 +23,7 @@ public class CreditScreen {
 	private boolean beginFade = true;
 	private float changeAlpha = 1.0f;
 	private int waitInc = 0;
+	private boolean pause = false;
 
 	public CreditScreen() {
 		float w = Gdx.graphics.getWidth();
@@ -40,16 +42,20 @@ public class CreditScreen {
 		Texture tex3 = new Texture(Gdx.files.internal("data/credit3.png"));
 		tex3.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
+		Texture tex4 = new Texture(Gdx.files.internal("data/credit4.png"));
+		tex4.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
 		TextureRegion region1 = new TextureRegion(tex1, 0, 0, 800, 600);
 		TextureRegion region2 = new TextureRegion(tex2, 0, 0, 800, 600);
 		TextureRegion region3 = new TextureRegion(tex3, 0, 0, 800, 600);
+		TextureRegion region4 = new TextureRegion(tex4, 0, 0, 800, 600);
 
 		Sprite sprite = new Sprite(region1);
 		sprite.setSize(1.0f, 1.0f * sprite.getHeight() / sprite.getWidth());
 		sprite.setOrigin(0.5f, 0.5f);
 
 		float x = -sprite.getWidth() / 2.0f;
-		float y = -sprite.getHeight()-(sprite.getHeight()/2);
+		float y = -sprite.getHeight() - (sprite.getHeight() / 2);
 		sprite.setPosition(x, y);
 		creditSprites.add(sprite);
 
@@ -66,26 +72,44 @@ public class CreditScreen {
 		y = y - sprite.getHeight();
 		sprite.setPosition(x, y);
 		creditSprites.add(sprite);
+
+		sprite = new Sprite(region4);
+		sprite.setSize(1.0f, 1.0f * sprite.getHeight() / sprite.getWidth());
+		sprite.setOrigin(0.5f, 0.5f);
+		y = y - sprite.getHeight();
+		sprite.setPosition(x, y);
+		creditSprites.add(sprite);
 	}
 
 	public void update() {
-		if(waitInc == 2){
-			height = 0.005f;
-			waitInc = 0;
-		} else {
-			height = 0;
+		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
+			if(pause){
+				pause = false;
+			} else{
+				pause = true;
+			}
+		}
+		if (!pause) {
+			if (waitInc == 2) {
+				height = 0.005f;
+				waitInc = 0;
+			} else {
+				height = 0;
+			}
 		}
 		for (Sprite spr : creditSprites) {
 			spr.setPosition(spr.getX(), spr.getY() + height);
 		}
-		if (creditSprites.get(creditSprites.size() - 1).getY() > -0.5f) {
-			height = 0;
-			pauseLast++;
+		if (!pause) {
+			if (creditSprites.get(creditSprites.size() - 1).getY() > -0.5f) {
+				height = 0;
+				pauseLast++;
+			}
+			if (pauseLast == 167) {
+				endCredits = true;
+			}
+			waitInc++;
 		}
-		if (pauseLast == 75) {
-			endCredits = true;
-		}
-		waitInc++;
 	}
 
 	public void draw() {
@@ -94,10 +118,10 @@ public class CreditScreen {
 
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-			for (Sprite spr : creditSprites) {
-				spr.draw(batch);
-			}
-		
+		for (Sprite spr : creditSprites) {
+			spr.draw(batch);
+		}
+
 		batch.end();
 	}
 
