@@ -3,6 +3,7 @@ package com.me.darkbeat;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,6 +18,7 @@ public class GameScreen {
 	private Sprite wallFront[];
 	private Sprite wallLeft[];
 	private Sprite wallRight[];
+	private Sprite catSprite;
 	private Sprite floor;
 	private int mapArray[] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
 			0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1,
@@ -49,6 +51,19 @@ public class GameScreen {
 		camera = new OrthographicCamera(1, h / w);
 		batch = new SpriteBatch();
 
+		/*Sound heartBeat = Gdx.audio.newSound(Gdx.files.internal("data/sounds/heartBeat.mp3"));
+		Sound footSteps = Gdx.audio.newSound(Gdx.files.internal("data/sounds/footStep.mp3"));
+		Sound catSound = Gdx.audio.newSound(Gdx.files.internal("data/sounds/catSound.mp3"));
+		Sound gruntSound = Gdx.audio.newSound(Gdx.files.internal("data/sounds/gruntSound.mp3"));
+		Sound hitWall = Gdx.audio.newSound(Gdx.files.internal("data/sounds/hitWall.mp3"));
+		Sound openDoorSound = Gdx.audio.newSound(Gdx.files.internal("data/sounds/openDoor.mp3"));
+		Sound closeDoorSound = Gdx.audio.newSound(Gdx.files.internal("data/sounds/closeDoor.mp3"));*/
+		
+		Texture catTex = new Texture(
+				Gdx.files
+						.internal("data/cat.png"));
+		catTex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
 		Texture wallFrontTex1 = new Texture(
 				Gdx.files
 						.internal("data/textures/walls/stone_wall_1_front.png"));
@@ -153,7 +168,15 @@ public class GameScreen {
 			wallRight[i].setPosition(-wallRight[i].getWidth() / 2.0f,
 					-wallRight[i].getHeight() / 2.0f);
 		}
-
+		
+		region1 = new TextureRegion(catTex, 0, 0, 64, 64);
+		catSprite = new Sprite(region1);
+		catSprite.setSize(0.25f,
+				0.25f * catSprite.getHeight() / catSprite.getWidth());
+		catSprite.setOrigin(0.5f, 0.5f);
+		catSprite.setPosition(-catSprite.getWidth() / 2.0f,
+				-catSprite.getHeight() / 2.0f+0.07f);
+		
 		floor = new Sprite(region2);
 		floor.setSize(0.5f, 0.5f * floor.getHeight() / floor.getWidth());
 		floor.setOrigin(0, 0);
@@ -171,8 +194,12 @@ public class GameScreen {
 			test[i] = 1;
 		}
 
-		test[23] = 3;
+		for(int i=0; i<test.length; i++){
+			textureArray[i] = test[i];
+		}
 
+		test[23] = 3;
+		
 		nickCage = new Player(45, 10);
 		testlevel = new Level(lWidth, lHeight, test);
 
@@ -198,7 +225,6 @@ public class GameScreen {
 		nickCage.update();
 		if (nickCage.changedPosition) {
 			testlevel.checkPlayer(nickCage);
-			testDraw();
 			nickCage.changedPosition = false;
 			if (cats.length > 0) {
 				for (int c = 0; c < cats.length; c++) {
@@ -207,6 +233,7 @@ public class GameScreen {
 					cats[c].move();
 				}
 			}
+			testDraw();
 		} else if (nickCage.changedDirection) {
 			nickCage.changedDirection = false;
 			if (cats.length > 0) {
@@ -216,6 +243,7 @@ public class GameScreen {
 					cats[c].move();
 				}
 			}
+			testDraw();
 		}
 	}
 
@@ -232,6 +260,30 @@ public class GameScreen {
 		int left = 0;
 		int right = 0;
 		int front = 0;
+		switch (nickCage.getDirection()) {
+		case North:
+			front = testlevel.mapArray[nickCage.getPosition() - testlevel.getWidth()];
+			break;
+		case South:
+			front = testlevel.mapArray[nickCage.getPosition() + testlevel.getWidth()];
+			break;
+		case East:
+			front = testlevel.mapArray[nickCage.getPosition() + 1];
+			break;
+		case West:
+			front = testlevel.mapArray[nickCage.getPosition() - 1];
+			break;
+		default:
+			break;
+		}
+		switch(front){
+		case 3:
+			catSprite.draw(batch);
+			break;
+		default:
+			break;
+		}
+		front = 0;
 		switch (nickCage.getDirection()) {
 		case North:
 			left = textureArray[nickCage.getPosition() - 1];
@@ -290,7 +342,6 @@ public class GameScreen {
 		default:
 			break;
 		}
-
 		// render front wall if its there
 		switch (front) {
 		case 1:
@@ -308,7 +359,6 @@ public class GameScreen {
 		default:
 			break;
 		}
-
 		batch.end();
 
 	}
