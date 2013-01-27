@@ -117,15 +117,15 @@ public class GameScreen {
 		beat_down = Gdx.audio.newSound(Gdx.files.internal("data/sounds/h2.ogg"));
 
 		Texture heartDoor1 = new Texture(
-				Gdx.files.internal("data/textures/door/door_left.png"));
+				Gdx.files.internal("data/textures/door/heart_door_left.png"));
 		heartDoor1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
 		Texture heartDoor2 = new Texture(
-				Gdx.files.internal("data/textures/door/door_right.png"));
+				Gdx.files.internal("data/textures/door/heart_door_right.png"));
 		heartDoor2.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
 		Texture heartDoor3 = new Texture(
-				Gdx.files.internal("data/textures/door/door_front.png"));
+				Gdx.files.internal("data/textures/door/heart_door_front.png"));
 		heartDoor3.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
 		Texture heartTex1 = new Texture(

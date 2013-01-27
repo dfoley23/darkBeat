@@ -17,6 +17,11 @@ public class ScreenManager {
 	}
 
 	public void update() {
+		if(Gdx.input.isKeyPressed(Keys.O)){
+			playing = false;
+			credits = true;
+			creditScreen = new CreditScreen();
+		}
 		if (playing) {
 			game.update();
 			if(game.switchScreen){

@@ -15,19 +15,21 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class CreditScreen {
 	private float height = 0.0f;
-	private float increment = 0.0f;
 	private ArrayList<Sprite> creditSprites;
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	public boolean endCredits = false;
 	private int pauseLast = -1;
-	private boolean beginFade = true;
-	private float changeAlpha = 1.0f;
 	private int waitInc = 0;
 	private boolean pause = false;
+
 	private Music ambience;
 	private Music heartbeat;
+	private boolean beating;
 	
+	private boolean keyRelease = true;
+	private int keyCount = 0;
+
 	public CreditScreen() {
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
@@ -39,6 +41,8 @@ public class CreditScreen {
 		ambience.setVolume(1.0f);
 		ambience.setLooping(false);
 		ambience.play();
+		
+		beating = false;
 		
 		heartbeat = Gdx.audio.newMusic(Gdx.files.internal("data/sounds/Heartbeat.ogg"));
 		heartbeat.setVolume(1.0f);
@@ -53,7 +57,7 @@ public class CreditScreen {
 		Texture tex3 = new Texture(Gdx.files.internal("data/credit3.png"));
 		tex3.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
-		Texture tex4 = new Texture(Gdx.files.internal("data/credit4.png"));
+		Texture tex4 = new Texture(Gdx.files.internal("data/textures/misc/game_end.png"));
 		tex4.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
 		TextureRegion region1 = new TextureRegion(tex1, 0, 0, 800, 600);
@@ -93,33 +97,49 @@ public class CreditScreen {
 	}
 
 	public void update() {
-		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
-			if(pause){
-				pause = false;
-			} else{
-				pause = true;
+		if (keyRelease) {
+			if (Gdx.input.isKeyPressed(Keys.SPACE)) {
+				if (pause) {
+					pause = false;
+				} else {
+					pause = true;
+				}
+				keyRelease = false;
+			}
+		} else {
+			if (!Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
+				if(keyCount > 7){
+					keyRelease = true;
+					keyCount = 0;
+				}
+				keyCount++;
 			}
 		}
 		if (!pause) {
-			if (waitInc == 2) {
+			if (waitInc == 2 && pauseLast < 0) {
+				heartbeat.stop();
 				height = 0.005f;
 				waitInc = 0;
 			} else {
 				height = 0;
 			}
-		}
-		for (Sprite spr : creditSprites) {
-			spr.setPosition(spr.getX(), spr.getY() + height);
-		}
-		if (!pause) {
-			if (creditSprites.get(creditSprites.size() - 1).getY() > -0.5f) {
+			if (creditSprites.get(creditSprites.size() - 1).getY() > -0.3f) {
+				if(!beating) heartbeat.play();
+				beating = true;
 				height = 0;
 				pauseLast++;
 			}
-			if (pauseLast == 167) {
+			if (pauseLast == 175) {
+				heartbeat.stop();
+				ambience.stop();
 				endCredits = true;
 			}
 			waitInc++;
+		} else {
+			height = 0;
+		}
+		for (Sprite spr : creditSprites) {
+			spr.setPosition(spr.getX(), spr.getY() + height);
 		}
 	}
 
