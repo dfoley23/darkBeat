@@ -1,7 +1,5 @@
 package com.me.darkbeat;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
@@ -96,7 +94,6 @@ public class GameScreen {
 	private int frameCounter = 0;
 	private int frameDivisor = 7;
 	private int maxAnimeTime = 100;
-	private int heart_state;
 	private boolean didBeat;
 
 	public GameScreen() {
@@ -517,8 +514,8 @@ public class GameScreen {
 				nickCage.changedPosition = false;
 				if (cats.length > 0) {
 					for (int c = 0; c < cats.length; c++) {
-						System.out.println("len: " + cats.length + " pos: "
-								+ cats[c].getPosition());
+//						System.out.println("len: " + cats.length + " pos: "
+//								+ cats[c].getPosition());
 						cats[c].move();
 					}
 				}
@@ -746,7 +743,6 @@ public class GameScreen {
 			}
 
 			if (nickCage.hasHeart) {
-				System.out.println("fear: " + nickCage.getFear());
 				switch(nickCage.getFear()){
 				case 1:
 					frameDivisor = 5;
@@ -854,43 +850,43 @@ public class GameScreen {
 	}
 
 	public void testDraw() {
-		int p = 0;
-		// Create file
-		BufferedWriter out = null;
-		try {
-			FileWriter fstream = new FileWriter("out.txt");
-			out = new BufferedWriter(fstream);
-		} catch (Exception e) {// Catch exception if any
-			System.err.println("Error: " + e.getMessage());
-		}
-
-		for (int i = 0; i < lHeight; i++) {
-			for (int j = 0; j < lWidth; j++) {
-				try{
-					out.write(test[p] + " ");
-				} catch (Exception e) {// Catch exception if any
-					System.err.print("Error in stream ");
-				}
-				
-				System.out.print(test[p]);
-				System.out.print(" ");
-				p++;
-			}
-			try{
-			out.write("\n");
-			} catch (Exception e) {// Catch exception if any
-				System.err.print("Error in stream ");
-			}
-			System.out.print("\n");
-		}
-		try {
-			// Close the output stream
-			out.close();
-		} catch (Exception e) {// Catch exception if any
-			System.err.println("Error: " + e.getMessage());
-		}
-		System.out.println("Position: " + nickCage.getPosition());
-		System.out.println("Facing: " + nickCage.getDirection());
+//		int p = 0;
+//		// Create file
+//		BufferedWriter out = null;
+//		try {
+//			FileWriter fstream = new FileWriter("out.txt");
+//			out = new BufferedWriter(fstream);
+//		} catch (Exception e) {// Catch exception if any
+//			System.err.println("Error: " + e.getMessage());
+//		}
+//
+//		for (int i = 0; i < lHeight; i++) {
+//			for (int j = 0; j < lWidth; j++) {
+//				try{
+//					out.write(test[p] + " ");
+//				} catch (Exception e) {// Catch exception if any
+//					System.err.print("Error in stream ");
+//				}
+//				
+//				//System.out.print(test[p]);
+//				//System.out.print(" ");
+//				p++;
+//			}
+//			try{
+//			out.write("\n");
+//			} catch (Exception e) {// Catch exception if any
+//				System.err.print("Error in stream ");
+//			}
+////			System.out.print("\n");
+//		}
+//		try {
+//			// Close the output stream
+//			out.close();
+//		} catch (Exception e) {// Catch exception if any
+//			System.err.println("Error: " + e.getMessage());
+//		}
+////		System.out.println("Position: " + nickCage.getPosition());
+////		System.out.println("Facing: " + nickCage.getDirection());
 	}
 
 	public void stopSound(){
