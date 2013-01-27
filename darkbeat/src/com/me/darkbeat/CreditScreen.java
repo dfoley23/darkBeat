@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -21,6 +22,11 @@ public class CreditScreen {
 	private int pauseLast = -1;
 	private int waitInc = 0;
 	private boolean pause = false;
+
+	private Music ambience;
+	private Music heartbeat;
+	private boolean beating;
+	
 	private boolean keyRelease = true;
 	private int keyCount = 0;
 
@@ -31,6 +37,16 @@ public class CreditScreen {
 		camera = new OrthographicCamera(1, h / w);
 		batch = new SpriteBatch();
 
+		ambience = Gdx.audio.newMusic(Gdx.files.internal("data/sounds/ambience_credits.wav"));
+		ambience.setVolume(1.0f);
+		ambience.setLooping(false);
+		ambience.play();
+		
+		beating = false;
+		
+		heartbeat = Gdx.audio.newMusic(Gdx.files.internal("data/sounds/Heartbeat.ogg"));
+		heartbeat.setVolume(1.0f);
+		
 		creditSprites = new ArrayList<Sprite>();
 		Texture tex1 = new Texture(Gdx.files.internal("data/credit1.png"));
 		tex1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -101,16 +117,21 @@ public class CreditScreen {
 		}
 		if (!pause) {
 			if (waitInc == 2 && pauseLast < 0) {
+				heartbeat.stop();
 				height = 0.005f;
 				waitInc = 0;
 			} else {
 				height = 0;
 			}
 			if (creditSprites.get(creditSprites.size() - 1).getY() > -0.3f) {
+				if(!beating) heartbeat.play();
+				beating = true;
 				height = 0;
 				pauseLast++;
 			}
-			if (pauseLast == 200) {
+			if (pauseLast == 175) {
+				heartbeat.stop();
+				ambience.stop();
 				endCredits = true;
 			}
 			waitInc++;
