@@ -7,11 +7,14 @@ public class Player{
 	
 	private int position;
 	private float fear;
+	private float volume;
 	private Direction dir;
 	private int mapWidth;
 	private int oldPos;
 	public boolean changedPosition;
 	public boolean changedDirection;
+	public boolean hasHeart;
+	
 	public enum Direction {
 		North, South, East, West;
 	}
@@ -26,6 +29,7 @@ public class Player{
 		mapWidth = width;
 		changedDirection = true;
 		changedPosition = false;
+		hasHeart = false;
 	}
 	
 	public void update(){
@@ -98,6 +102,9 @@ public class Player{
 			  Gdx.input.isKeyPressed(Keys.W) || 
 			  Gdx.input.isKeyPressed(Keys.A) )){
 			keysReleased = true;
+		}
+		if(!hasHeart){
+			
 		}
 	}
 	
