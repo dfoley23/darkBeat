@@ -16,6 +16,7 @@ public class Level {
 	public int doorPos;
 	public boolean hitCat = false;
 	public boolean endGame = false;
+	public int endGameAnime = -1;
 
 	public Level(int levelWidth, int levelHeight, int level[]) {
 		ohYeah = Gdx.audio.newSound(Gdx.files
@@ -145,6 +146,7 @@ public class Level {
 				if(player.hasHeart){
 					openDoor.play(0.045f);
 					endGame = true;
+					endGameAnime = 0;
 				}
 				break;
 			default:

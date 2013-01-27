@@ -62,6 +62,9 @@ public class ScreenManager {
 	public void update() {
 		if (playing) {
 			game.update();
+			if(game.switchScreen){
+				playing = false;
+			}
 		} else {
 			intro.update();
 			if (Gdx.input.isKeyPressed(Keys.SPACE)
@@ -69,7 +72,6 @@ public class ScreenManager {
 				switch (intro.getChoice()) {
 				case start:
 					playing = true;
-					intro.dispose();
 					break;
 				case quit:
 					System.exit(0);
