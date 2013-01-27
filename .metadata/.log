@@ -1374,3 +1374,49 @@ Command-line arguments:  -os macosx -ws cocoa -arch x86 -product org.eclipse.epp
 
 !ENTRY org.eclipse.ui 4 4 2013-01-26 18:56:34.465
 !MESSAGE Unable to find Action Set: org.eclipse.wb.core.ui.actionset
+
+!ENTRY com.google.gwt.eclipse.oophm 4 0 2013-01-27 01:45:07.731
+!MESSAGE Unable to reload the web server.
+!STACK 0
+java.lang.RuntimeException: java.util.concurrent.ExecutionException: com.google.gwt.dev.shell.remoteui.MessageTransport$RequestException: Unable to restart the web server. It is still in the process of starting up. Wait a few seconds and try again.
+	at com.google.gwt.eclipse.oophm.devmode.DevModeServiceClient.waitForResponse(DevModeServiceClient.java:105)
+	at com.google.gwt.eclipse.oophm.devmode.DevModeServiceClient.restartWebServer(DevModeServiceClient.java:92)
+	at com.google.gwt.eclipse.oophm.views.hierarchical.WebAppLaunchView$ReloadServerAction$1.run(WebAppLaunchView.java:267)
+	at java.lang.Thread.run(Thread.java:680)
+Caused by: java.util.concurrent.ExecutionException: com.google.gwt.dev.shell.remoteui.MessageTransport$RequestException: Unable to restart the web server. It is still in the process of starting up. Wait a few seconds and try again.
+	at java.util.concurrent.FutureTask$Sync.innerGet(FutureTask.java:222)
+	at java.util.concurrent.FutureTask.get(FutureTask.java:83)
+	at com.google.gwt.eclipse.oophm.devmode.DevModeServiceClient.waitForResponse(DevModeServiceClient.java:103)
+	... 3 more
+Caused by: com.google.gwt.dev.shell.remoteui.MessageTransport$RequestException: Unable to restart the web server. It is still in the process of starting up. Wait a few seconds and try again.
+	at com.google.gwt.dev.shell.remoteui.MessageTransport.processFailure(MessageTransport.java:371)
+	at com.google.gwt.dev.shell.remoteui.MessageTransport.processMessage(MessageTransport.java:389)
+	at com.google.gwt.dev.shell.remoteui.MessageTransport.access$400(MessageTransport.java:45)
+	at com.google.gwt.dev.shell.remoteui.MessageTransport$2.run(MessageTransport.java:309)
+	... 1 more
+!SESSION 2013-01-27 01:47:16.323 -----------------------------------------------
+eclipse.buildId=M20120914-1800
+java.version=1.6.0_24
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86, WS=cocoa, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.jee.product -keyring /Users/crono/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86 -product org.eclipse.epp.package.jee.product -keyring /Users/crono/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2013-01-27 01:47:31.070
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.ui 4 4 2013-01-27 01:47:32.730
+!MESSAGE Unable to find Action Set: org.eclipse.wb.core.ui.actionset
+!SESSION 2013-01-27 02:04:15.899 -----------------------------------------------
+eclipse.buildId=M20120914-1800
+java.version=1.6.0_24
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86, WS=cocoa, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.jee.product -keyring /Users/crono/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86 -product org.eclipse.epp.package.jee.product -keyring /Users/crono/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2013-01-27 02:04:24.668
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.ui 4 4 2013-01-27 02:04:26.108
+!MESSAGE Unable to find Action Set: org.eclipse.wb.core.ui.actionset
