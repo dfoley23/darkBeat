@@ -8,6 +8,7 @@ public class Level{
 	public int mapArray[];
 	private int height;
 	private int width;
+	private double maxDistance;
 	private Sound footSteps;
 	private Sound ohYeah;
 	
@@ -18,7 +19,9 @@ public class Level{
 		width = levelWidth;
 		footSteps = Gdx.audio.newSound(Gdx.files
 				.internal("data/sounds/footsteps.ogg"));
-
+		double temp = (levelHeight * levelHeight) + (levelWidth * levelWidth);
+		maxDistance = Math.sqrt(temp);
+		System.out.println("max dist: " + maxDistance);
 	}
 
 	public int getHeight() {
@@ -65,11 +68,11 @@ public class Level{
 	 * 9: End goal
 	 */
 	
-	public void checkPlayer(Player player) {
+	public void checkPlayer(Player player, int heart) {
 		if (mapArray[player.getPosition()] == 0) {
 			mapArray[player.getOldPosition()] = 0;
 			mapArray[player.getPosition()] = 2;
-			footSteps.play(1.0f);
+			footSteps.play(0.05f);
 		} else {
 			switch (mapArray[player.getPosition()]) {
 			case 1:
@@ -99,6 +102,22 @@ public class Level{
 			}
 			player.setPosition(player.getOldPosition());
 		}
+		if(!player.hasHeart){
+			int heartOffset_x = (player.getPosition() % width) - (heart % width);
+			int heartOffset_y = (player.getPosition() / width) -(heart / width);
+			double distance = Math.sqrt(Math.pow(heartOffset_x, 2)  + Math.pow(heartOffset_y, 2));
+			if(distance >  maxDistance / 3.0){
+				player.setVolume(0.0f);
+			}
+			else{
+				distance = distance / maxDistance; System.out.println("d1: " + distance);
+				distance = 1.0 - distance; System.out.println("d2: " + distance);
+				distance = Math.pow(distance, 8); System.out.println("d3: " + distance);
+				player.setVolume((float) distance);
+				System.out.println("h.x: " + heartOffset_x + " h.y: " + heartOffset_y);
+			}
+		}
+		else player.setVolume(1.0f);
 	}
 
 }
