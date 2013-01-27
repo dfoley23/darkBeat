@@ -11,10 +11,12 @@ public class Player{
 	private float volume;
 	private Direction dir;
 	private int mapWidth;
-	private int oldPos;
+	public int oldPos;
 	public boolean changedPosition;
 	public boolean changedDirection;
 	public boolean hasHeart;
+	public boolean isAtDoor = false;
+	private Sound closeDoor;
 	
 	public enum Direction {
 		North, South, East, West;
@@ -31,6 +33,8 @@ public class Player{
 		changedDirection = true;
 		changedPosition = false;
 		hasHeart = false;
+		closeDoor = Gdx.audio.newSound(Gdx.files
+				.internal("data/sounds/doorClose.ogg"));
 	}
 	
 	public void update(){
@@ -57,6 +61,7 @@ public class Player{
 				default:
 					break;
 				}
+				setAtDoor();
 				keysReleased = false;
 				changedPosition = true;
 			} else if (Gdx.input.isKeyPressed(Keys.A)) { //turn left
@@ -76,6 +81,7 @@ public class Player{
 				default:
 					break;
 				}
+				setAtDoor();
 				keysReleased = false;
 				changedDirection = true;
 			} else if (Gdx.input.isKeyPressed(Keys.D)) { //turn right
@@ -95,6 +101,7 @@ public class Player{
 				default:
 					break;
 				}
+				setAtDoor();
 				keysReleased = false;
 				changedDirection = true;
 			}
@@ -104,6 +111,13 @@ public class Player{
 			  Gdx.input.isKeyPressed(Keys.A) )){
 			keysReleased = true;
 		}
+	}
+	
+	private void setAtDoor(){
+		if(isAtDoor){
+			closeDoor.play(0.025f);
+		}
+		isAtDoor = false;
 	}
 	
 	public void collisionAction(){
