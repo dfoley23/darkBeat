@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 INDEX VERSION 1.126+C:\Users\f00lish\Documents\GitHub\darkBeat\.metadata\.plugins\org.eclipse.jdt.core
 305854171.index
 3974580528.index
@@ -22,3 +23,45 @@ INDEX VERSION 1.126+C:\Users\f00lish\Documents\GitHub\darkBeat\.metadata\.plugin
 3081920789.index
 2462851192.index
 1115467115.index
+=======
+INDEX VERSION 1.126+/Users/crono/Desktop/darkBeat/.metadata/.plugins/org.eclipse.jdt.core
+3321539481.index
+4238209716.index
+2353363192.index
+1865113024.index
+4013945540.index
+1496784088.index
+2218841421.index
+3004609673.index
+84777399.index
+1623278965.index
+450555687.index
+255726582.index
+3954040986.index
+765977872.index
+1833648217.index
+422710967.index
+156905802.index
+268821820.index
+463329361.index
+2788042527.index
+2326659272.index
+3266567714.index
+3710429966.index
+272178059.index
+2286151582.index
+2440409983.index
+1819685514.index
+3302703152.index
+4249315662.index
+1384487945.index
+3299281747.index
+1438524843.index
+770573466.index
+1271342938.index
+3462632994.index
+3712507179.index
+2545238116.index
+3000285004.index
+1402631674.index
+>>>>>>> 040dd3373015b8f1bbc8b32cf0cbb08c71c28a87
