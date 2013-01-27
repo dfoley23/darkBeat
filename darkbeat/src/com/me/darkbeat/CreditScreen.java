@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -24,7 +25,9 @@ public class CreditScreen {
 	private float changeAlpha = 1.0f;
 	private int waitInc = 0;
 	private boolean pause = false;
-
+	private Music ambience;
+	private Music heartbeat;
+	
 	public CreditScreen() {
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
@@ -32,6 +35,14 @@ public class CreditScreen {
 		camera = new OrthographicCamera(1, h / w);
 		batch = new SpriteBatch();
 
+		ambience = Gdx.audio.newMusic(Gdx.files.internal("data/sounds/ambience_credits.wav"));
+		ambience.setVolume(1.0f);
+		ambience.setLooping(false);
+		ambience.play();
+		
+		heartbeat = Gdx.audio.newMusic(Gdx.files.internal("data/sounds/Heartbeat.ogg"));
+		heartbeat.setVolume(1.0f);
+		
 		creditSprites = new ArrayList<Sprite>();
 		Texture tex1 = new Texture(Gdx.files.internal("data/credit1.png"));
 		tex1.setFilter(TextureFilter.Linear, TextureFilter.Linear);
