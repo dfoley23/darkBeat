@@ -18,6 +18,10 @@ public class GameScreen {
 	private Sprite wallFront[];
 	private Sprite wallLeft[];
 	private Sprite wallRight[];
+	private Sprite handFront;
+	private Sprite handRight;
+	private Sprite handLeft;
+	private Sprite handOut;
 	private Sprite catSprite;
 	private Sprite floor;
 	private int mapArray[] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
@@ -63,6 +67,27 @@ public class GameScreen {
 				Gdx.files
 						.internal("data/cat.png"));
 		catTex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		
+		Texture hand1Tex = new Texture(
+				Gdx.files
+						.internal("data/textures/hands/hand_front.png"));
+		hand1Tex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		Texture hand2Tex = new Texture(
+				Gdx.files
+				.internal("data/textures/hands/hand_left.png"));
+		hand2Tex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		Texture hand3Tex = new Texture(
+				Gdx.files
+				.internal("data/textures/hands/hand_right.png"));
+		hand3Tex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+		Texture hand4Tex = new Texture(
+				Gdx.files
+				.internal("data/textures/hands/hand_out.png"));
+		hand4Tex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
 		Texture wallFrontTex1 = new Texture(
 				Gdx.files
@@ -175,7 +200,39 @@ public class GameScreen {
 				0.25f * catSprite.getHeight() / catSprite.getWidth());
 		catSprite.setOrigin(0.5f, 0.5f);
 		catSprite.setPosition(-catSprite.getWidth() / 2.0f,
-				-catSprite.getHeight() / 2.0f+0.07f);
+				-catSprite.getHeight() / 2.0f+0.2f);
+		
+		region1 = new TextureRegion(hand1Tex, 0, 0, 800, 600);
+		handFront = new Sprite(region1);
+		handFront.setSize(1f,
+				1f * handFront.getHeight() / handFront.getWidth());
+		handFront.setOrigin(0.5f, 0.5f);
+		handFront.setPosition(-handFront.getWidth() / 2.0f,
+				-handFront.getHeight() / 2.0f);
+		
+		region1 = new TextureRegion(hand2Tex, 0, 0, 800, 600);
+		handLeft = new Sprite(region1);
+		handLeft.setSize(1f,
+				1f * handLeft.getHeight() / handLeft.getWidth());
+		handLeft.setOrigin(0.5f, 0.5f);
+		handLeft.setPosition(-handLeft.getWidth() / 2.0f,
+				-handLeft.getHeight() / 2.0f);
+		
+		region1 = new TextureRegion(hand3Tex, 0, 0, 800, 600);
+		handRight = new Sprite(region1);
+		handRight.setSize(1f,
+				1f * handRight.getHeight() / handRight.getWidth());
+		handRight.setOrigin(0.5f, 0.5f);
+		handRight.setPosition(-handRight.getWidth() / 2.0f,
+				-handRight.getHeight() / 2.0f);
+		
+		region1 = new TextureRegion(hand4Tex, 0, 0, 800, 600);
+		handOut = new Sprite(region1);
+		handOut.setSize(1f,
+				1f * handOut.getHeight() / handOut.getWidth());
+		handOut.setOrigin(0.5f, 0.5f);
+		handOut.setPosition(-handOut.getWidth() / 2.0f,
+				-handOut.getHeight() / 2.0f);
 		
 		floor = new Sprite(region2);
 		floor.setSize(0.5f, 0.5f * floor.getHeight() / floor.getWidth());
@@ -260,6 +317,9 @@ public class GameScreen {
 		int left = 0;
 		int right = 0;
 		int front = 0;
+		boolean leftWall = false;
+		boolean rightWall = false;
+		boolean frontWall = false;
 		switch (nickCage.getDirection()) {
 		case North:
 			front = testlevel.mapArray[nickCage.getPosition() - testlevel.getWidth()];
@@ -312,15 +372,19 @@ public class GameScreen {
 		switch (left) {
 		case 1:
 			wallLeft[0].draw(batch);
+			leftWall = true;
 			break;
 		case 2:
 			wallLeft[1].draw(batch);
+			leftWall = true;
 			break;
 		case 3:
 			wallLeft[2].draw(batch);
+			leftWall = true;
 			break;
 		case 4:
 			wallLeft[3].draw(batch);
+			leftWall = true;
 			break;
 		default:
 			break;
@@ -329,15 +393,19 @@ public class GameScreen {
 		switch (right) {
 		case 1:
 			wallRight[0].draw(batch);
+			rightWall = true;
 			break;
 		case 2:
 			wallRight[1].draw(batch);
+			rightWall = true;
 			break;
 		case 3:
 			wallRight[2].draw(batch);
+			rightWall = true;
 			break;
 		case 4:
 			wallRight[3].draw(batch);
+			rightWall = true;
 			break;
 		default:
 			break;
@@ -346,19 +414,33 @@ public class GameScreen {
 		switch (front) {
 		case 1:
 			wallFront[0].draw(batch);
+			frontWall = true;
 			break;
 		case 2:
 			wallFront[1].draw(batch);
+			frontWall = true;
 			break;
 		case 3:
 			wallFront[2].draw(batch);
+			frontWall = true;
 			break;
 		case 4:
 			wallFront[3].draw(batch);
+			frontWall = true;
 			break;
 		default:
 			break;
 		}
+		if(frontWall){
+			handFront.draw(batch);
+		} else if (rightWall){
+			handRight.draw(batch);
+		} else if(leftWall){
+			handLeft.draw(batch);
+		} else {
+			handOut.draw(batch);
+		}
+		
 		batch.end();
 
 	}
