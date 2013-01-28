@@ -517,8 +517,6 @@ public class GameScreen {
 				nickCage.changedPosition = false;
 				if (cats.length > 0) {
 					for (int c = 0; c < cats.length; c++) {
-						System.out.println("len: " + cats.length + " pos: "
-								+ cats[c].getPosition());
 						cats[c].move();
 					}
 				}
@@ -530,11 +528,6 @@ public class GameScreen {
 					testlevel.doorPos = -1;
 				}
 				nickCage.changedDirection = false;
-				/*
-				 * if (cats.length > 0) { for (int c = 0; c < cats.length; c++)
-				 * { System.out.println("len: " + cats.length + " pos: " +
-				 * cats[c].getPosition()); cats[c].move(); } }
-				 */
 				testDraw();
 			}
 			if(!nickCage.hasHeart){
@@ -746,7 +739,6 @@ public class GameScreen {
 			}
 
 			if (nickCage.hasHeart) {
-				System.out.println("fear: " + nickCage.getFear());
 				switch(nickCage.getFear()){
 				case 1:
 					frameDivisor = 5;
@@ -764,7 +756,6 @@ public class GameScreen {
 					frameDivisor = 11;
 					break;
 				default:
-					System.out.println("Broken--fear: " + nickCage.getFear());
 					break;
 				}
 				int frame = frameCounter / frameDivisor;
@@ -871,9 +862,6 @@ public class GameScreen {
 				} catch (Exception e) {// Catch exception if any
 					System.err.print("Error in stream ");
 				}
-				
-				System.out.print(test[p]);
-				System.out.print(" ");
 				p++;
 			}
 			try{
@@ -881,7 +869,6 @@ public class GameScreen {
 			} catch (Exception e) {// Catch exception if any
 				System.err.print("Error in stream ");
 			}
-			System.out.print("\n");
 		}
 		try {
 			// Close the output stream
@@ -889,8 +876,6 @@ public class GameScreen {
 		} catch (Exception e) {// Catch exception if any
 			System.err.println("Error: " + e.getMessage());
 		}
-		System.out.println("Position: " + nickCage.getPosition());
-		System.out.println("Facing: " + nickCage.getDirection());
 	}
 
 	public void stopSound(){

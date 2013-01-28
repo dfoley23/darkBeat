@@ -10,7 +10,6 @@ public class Level {
 	private int width;
 	private double maxDistance;
 	private Sound footSteps;
-	private Sound ohYeah;
 	private Sound openDoor;
 	private Sound catMEOW;
 	public int doorPos;
@@ -19,8 +18,6 @@ public class Level {
 	public int endGameAnime = -1;
 
 	public Level(int levelWidth, int levelHeight, int level[]) {
-		ohYeah = Gdx.audio.newSound(Gdx.files
-				.internal("data/sounds/oh_yeah_wav_cut.wav"));
 		mapArray = level;
 		height = levelHeight;
 		width = levelWidth;
@@ -34,7 +31,6 @@ public class Level {
 
 		double temp = (levelHeight * levelHeight) + (levelWidth * levelWidth);
 		maxDistance = Math.sqrt(temp);
-		System.out.println("max dist: " + maxDistance);
 
 	}
 
@@ -139,8 +135,6 @@ public class Level {
 				mapArray[player.getPosition()] = 0;
 				player.hasHeart = true;
 				player.setVolume(1.0f);
-				long id2 = ohYeah.play();
-				ohYeah.setVolume(id2, 0.035f);
 				break;
 			case 9:
 				if(player.hasHeart){
@@ -161,7 +155,6 @@ public class Level {
 					- (heart % width);
 			int heartOffset_y = (player.getPosition() / width)
 					- (heart / width);
-			System.out.println("x: " + heartOffset_x + " y: " + heartOffset_y);
 			double distance = Math.sqrt(Math.pow(heartOffset_x, 2)
 					+ Math.pow(heartOffset_y, 2));
 			if (distance > maxDistance / 2.0) {
@@ -178,16 +171,13 @@ public class Level {
 					- (endDoor % width);
 			int endDoorOffset_y = (player.getPosition() / width)
 					- (endDoor / width);
-			System.out.println("x: " + endDoorOffset_x + " y: " + endDoorOffset_y);
 			double distance = Math.sqrt(Math.pow(endDoorOffset_x, 2)
 					+ Math.pow(endDoorOffset_y, 2));
 			distance = distance / maxDistance;
 			distance = 1.0 - distance;
 			distance = Math.pow(distance, 3);
 			player.setFear(bobBarker(distance));
-			System.out.println("dist: " + distance + " bob: " + bobBarker(distance));
 		}
-		System.out.println("player pos: " + player.getPosition());
 	}
 	
 	public int bobBarker(double input){

@@ -37,7 +37,7 @@ public class CreditScreen {
 		camera = new OrthographicCamera(1, h / w);
 		batch = new SpriteBatch();
 
-		ambience = Gdx.audio.newMusic(Gdx.files.internal("data/sounds/ambience_credits.wav"));
+		ambience = Gdx.audio.newMusic(Gdx.files.internal("data/sounds/ambience_credits.ogg"));
 		ambience.setVolume(1.0f);
 		ambience.setLooping(false);
 		ambience.play();
