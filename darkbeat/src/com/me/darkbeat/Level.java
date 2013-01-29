@@ -31,7 +31,6 @@ public class Level {
 
 		double temp = (levelHeight * levelHeight) + (levelWidth * levelWidth);
 		maxDistance = Math.sqrt(temp);
-
 	}
 
 	public int getHeight() {
@@ -176,11 +175,17 @@ public class Level {
 			distance = distance / maxDistance;
 			distance = 1.0 - distance;
 			distance = Math.pow(distance, 3);
-			player.setFear(bobBarker(distance));
+			player.setFear(bobBarker(distance, player));
 		}
 	}
 	
-	public int bobBarker(double input){
+	public int bobBarker(double input, Player player){
+		int pos= player.getPosition();
+		/*if ((pos / 14) < 4 && (pos % 14) < 3) player.setVolume(0.025f);
+		else if ((pos / 14) < 4 && (pos % 14) < 6) player.setVolume(0.1f);
+		else if ((pos / 14) < 4 ) player.setVolume(0.2f);
+		else if((pos / 14) < 7 && (pos % 14) > 7) player.setVolume(0.4f);
+		else player.setVolume(1.0f);*/
 		if(input < .2) return 5;
 		else if(input < .4) return 4;
 		else if(input < .6) return 3;

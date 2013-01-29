@@ -40,7 +40,7 @@ public class CreditScreen {
 		ambience = Gdx.audio.newMusic(Gdx.files.internal("data/sounds/ambience_credits.ogg"));
 		ambience.setVolume(1.0f);
 		ambience.setLooping(false);
-		ambience.play();
+		//ambience.play();
 		
 		beating = false;
 		

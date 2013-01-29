@@ -1,7 +1,5 @@
 package com.me.darkbeat;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
@@ -49,6 +47,8 @@ public class GameScreen {
 	private Sound beat;
 	private Sound beat_up;
 	private Sound beat_down;
+	private long up_id;
+	private long down_id;
 	
 	private long beat_id;
 	public boolean switchScreen = false;
@@ -96,7 +96,6 @@ public class GameScreen {
 	private int frameCounter = 0;
 	private int frameDivisor = 7;
 	private int maxAnimeTime = 100;
-	private int heart_state;
 	private boolean didBeat;
 
 	public GameScreen() {
@@ -467,14 +466,6 @@ public class GameScreen {
 		doorRight.setOrigin(0.5f, 0.5f);
 		doorRight.setPosition(-doorRight.getWidth() / 2.0f,
 				-doorRight.getHeight() / 2.0f);
-
-		/*
-		 * for (int i = 0; i < 10; i++) { test[i] = 1; } for (int i = 10; i <
-		 * 90; i++) { if (i % lWidth == 9 || i % lHeight == 0){ if(i==49){
-		 * test[i] = 0; } else{ test[i] = 1; } } else test[i] = 0; } for (int i
-		 * = 90; i < 100; i++) { test[i] = 1; }
-		 */
-
 		for (int i = 0; i < test.length; i++) {
 			if (test[i] == 1) {
 				textureArray[i] = test[i];
@@ -506,8 +497,6 @@ public class GameScreen {
 
 		testlevel = new Level(lWidth, lHeight, test);
 
-		testDraw();
-
 	}
 
 	public void update() {
@@ -521,14 +510,12 @@ public class GameScreen {
 					}
 				}
 				testlevel.checkPlayer(nickCage, heartPosition, endDoorPosition);
-				testDraw();
 			} else if (nickCage.changedDirection) {
 				if (!nickCage.isAtDoor && testlevel.doorPos > 0) {
 					testlevel.mapArray[testlevel.doorPos] = 4;
 					testlevel.doorPos = -1;
 				}
 				nickCage.changedDirection = false;
-				testDraw();
 			}
 			if(!nickCage.hasHeart){
 				heartbeat.setVolume(nickCage.getVolume());
@@ -763,7 +750,8 @@ public class GameScreen {
 				case 0:
 					heart1.draw(batch);
 					if(!didBeat){
-						beat_up.play();
+						up_id = beat_up.play();
+						beat_up.setVolume(up_id, nickCage.getVolume());
 						didBeat = true;
 					}
 					break;
@@ -774,7 +762,8 @@ public class GameScreen {
 				case 2:
 					heart3.draw(batch);
 					if(!didBeat){
-						beat_down.play();
+						down_id = beat_down.play();
+						beat_down.setVolume(down_id, nickCage.getVolume());
 						didBeat = true;
 					}
 					break;
@@ -801,12 +790,6 @@ public class GameScreen {
 			}
 		} else {
 			if(testlevel.endGameAnime < maxAnimeTime){
-				/*wallLeft[0].rotate(testlevel.endGameAnime);
-				wallLeft[0].draw(batch);
-				doorRight.rotate(testlevel.endGameAnime);
-				doorRight.draw(batch);
-				handOut.rotate(testlevel.endGameAnime);
-				handOut.draw(batch);*/
 				int frame = frameCounter / 30;
 				switch (frame) {
 				case 0:
@@ -842,40 +825,6 @@ public class GameScreen {
 		}
 		batch.end();
 
-	}
-
-	public void testDraw() {
-		int p = 0;
-		// Create file
-		BufferedWriter out = null;
-		try {
-			FileWriter fstream = new FileWriter("out.txt");
-			out = new BufferedWriter(fstream);
-		} catch (Exception e) {// Catch exception if any
-			System.err.println("Error: " + e.getMessage());
-		}
-
-		for (int i = 0; i < lHeight; i++) {
-			for (int j = 0; j < lWidth; j++) {
-				try{
-					out.write(test[p] + " ");
-				} catch (Exception e) {// Catch exception if any
-					System.err.print("Error in stream ");
-				}
-				p++;
-			}
-			try{
-			out.write("\n");
-			} catch (Exception e) {// Catch exception if any
-				System.err.print("Error in stream ");
-			}
-		}
-		try {
-			// Close the output stream
-			out.close();
-		} catch (Exception e) {// Catch exception if any
-			System.err.println("Error: " + e.getMessage());
-		}
 	}
 
 	public void stopSound(){
