@@ -22,6 +22,7 @@ public class CreditScreen {
 	private int pauseLast = -1;
 	private int waitInc = 0;
 	private boolean pause = false;
+	private boolean initSound = false;
 
 	private Music ambience;
 	private Music heartbeat;
@@ -37,10 +38,7 @@ public class CreditScreen {
 		camera = new OrthographicCamera(1, h / w);
 		batch = new SpriteBatch();
 
-		ambience = Gdx.audio.newMusic(Gdx.files.internal("data/sounds/ambience_credits.ogg"));
-		ambience.setVolume(1.0f);
-		ambience.setLooping(false);
-		//ambience.play();
+		ambience = Gdx.audio.newMusic(Gdx.files.internal("data/sounds/ambience_credits.wav"));
 		
 		beating = false;
 		
@@ -97,6 +95,12 @@ public class CreditScreen {
 	}
 
 	public void update() {
+		if(!initSound){
+			ambience.setVolume(1.0f);
+			ambience.setLooping(false);
+			ambience.play();
+			initSound = true;
+		}
 		if (keyRelease) {
 			if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 				if (pause) {

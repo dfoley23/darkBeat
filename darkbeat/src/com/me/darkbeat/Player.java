@@ -40,7 +40,7 @@ public class Player{
 	public void update(){
 		//move forward
 		if (keysReleased){
-			if(Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP)) {
+			if(Gdx.input.isKeyPressed(Keys.W)) {
 				switch(dir){
 				case North:
 					oldPos = position;
@@ -64,7 +64,7 @@ public class Player{
 				setAtDoor();
 				keysReleased = false;
 				changedPosition = true;
-			} else if (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) { //turn left
+			} else if (Gdx.input.isKeyPressed(Keys.A)) { //turn left
 				switch(dir){
 				case North:
 					dir = Direction.West;
@@ -84,7 +84,7 @@ public class Player{
 				setAtDoor();
 				keysReleased = false;
 				changedDirection = true;
-			} else if (Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)) { //turn right
+			} else if (Gdx.input.isKeyPressed(Keys.D)) { //turn right
 				switch(dir){
 				case North:
 					dir = Direction.East;
@@ -108,10 +108,7 @@ public class Player{
 		}
 		if (!(Gdx.input.isKeyPressed(Keys.D) || 
 			  Gdx.input.isKeyPressed(Keys.W) || 
-			  Gdx.input.isKeyPressed(Keys.A) ||
-			  Gdx.input.isKeyPressed(Keys.RIGHT) ||
-			  Gdx.input.isKeyPressed(Keys.LEFT) ||
-			  Gdx.input.isKeyPressed(Keys.UP))){
+			  Gdx.input.isKeyPressed(Keys.A) )){
 			keysReleased = true;
 		}
 	}

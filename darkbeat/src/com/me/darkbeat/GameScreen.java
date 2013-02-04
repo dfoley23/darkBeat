@@ -47,8 +47,7 @@ public class GameScreen {
 	private Sound beat;
 	private Sound beat_up;
 	private Sound beat_down;
-	private long up_id;
-	private long down_id;
+	private boolean initSound = false;
 	
 	private long beat_id;
 	public boolean switchScreen = false;
@@ -70,13 +69,13 @@ public class GameScreen {
 	// 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, };
 	private int test[] = { // 14 x 10
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-	1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 4, 3, 1, 
-	1, 1, 0, 4, 0, 0, 0, 4, 0, 1, 1, 1, 1, 1, 
-	1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 
+	1, 0, 4, 0, 0, 0, 0, 1, 0, 0, 0, 4, 3, 1, 
+	1, 1, 1, 0, 0, 0, 0, 4, 0, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 4, 0, 1, 
 	1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1,
-	1, 1, 1, 1, 4, 1, 0, 1, 1, 3, 0, 0, 0, 1,
-	1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1,
-	1, 0, 0, 3, 0, 0, 0, 0, 1, 1, 1, 1, 4, 1, 
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 0, 0, 0, 1,
+	1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1,
+	1, 0, 0, 3, 0, 0, 0, 1, 1, 1, 1, 1, 4, 1, 
 	1, 1, 4, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 
 	1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 
 	9, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 
@@ -97,6 +96,7 @@ public class GameScreen {
 	private int frameDivisor = 7;
 	private int maxAnimeTime = 100;
 	private boolean didBeat;
+	private Color colorTint = Color.LIGHT_GRAY;
 
 	public GameScreen() {
 		float w = Gdx.graphics.getWidth();
@@ -110,15 +110,12 @@ public class GameScreen {
 
 		heartbeat = Gdx.audio.newMusic(Gdx.files
 				.internal("data/sounds/Heartbeat.ogg"));
-
-		heartbeat.setLooping(true);
-		heartbeat.setVolume(0.0f);
-		//heartbeat.play();
-		
+	
 		beat = Gdx.audio.newSound(Gdx.files.internal("data/sounds/h.ogg"));
 		beat_id = beat.play();
 		beat.setLooping(beat_id, true);
 		beat.setVolume(beat_id, 0.0f);
+		beat.stop();
 		
 		beat_up = Gdx.audio.newSound(Gdx.files.internal("data/sounds/h1.ogg"));
 		beat_down = Gdx.audio.newSound(Gdx.files.internal("data/sounds/h2.ogg"));
@@ -294,18 +291,21 @@ public class GameScreen {
 			wallFront[i].setOrigin(0.5f, 0.5f);
 			wallFront[i].setPosition(-wallFront[i].getWidth() / 2.0f,
 					-wallFront[i].getHeight() / 2.0f);
+			wallFront[i].setColor(colorTint);
 			wallLeft[i] = new Sprite(region2);
 			wallLeft[i].setSize(1,
 					1 * wallLeft[i].getHeight() / wallLeft[i].getWidth());
 			wallLeft[i].setOrigin(0.5f, 0.5f);
 			wallLeft[i].setPosition(-wallLeft[i].getWidth() / 2.0f,
 					-wallLeft[i].getHeight() / 2.0f);
+			wallLeft[i].setColor(colorTint);
 			wallRight[i] = new Sprite(region3);
 			wallRight[i].setSize(1,
 					1 * wallRight[i].getHeight() / wallRight[i].getWidth());
 			wallRight[i].setOrigin(0.5f, 0.5f);
 			wallRight[i].setPosition(-wallRight[i].getWidth() / 2.0f,
 					-wallRight[i].getHeight() / 2.0f);
+			wallRight[i].setColor(colorTint);
 		}
 		
 		region1 = new TextureRegion(winTex0, 0, 0, 512, 512);
@@ -412,7 +412,8 @@ public class GameScreen {
 				1.0f * catSprite.getHeight() / catSprite.getWidth());
 		catSprite.setOrigin(0.5f, 0.5f);
 		catSprite.setPosition(-catSprite.getWidth() / 2.0f,
-				-catSprite.getHeight() / 2.0f + 0.2f);
+				-catSprite.getHeight() / 2.0f + 0.17f);
+		//catSprite.setColor(colorTint);
 
 		region1 = new TextureRegion(hand1Tex, 0, 0, 800, 600);
 		handFront = new Sprite(region1);
@@ -421,6 +422,7 @@ public class GameScreen {
 		handFront.setOrigin(0.5f, 0.5f);
 		handFront.setPosition(-handFront.getWidth() / 2.0f,
 				-handFront.getHeight() / 2.0f);
+		handFront.setColor(colorTint);
 
 		region1 = new TextureRegion(hand2Tex, 0, 0, 800, 600);
 		handLeft = new Sprite(region1);
@@ -428,6 +430,7 @@ public class GameScreen {
 		handLeft.setOrigin(0.5f, 0.5f);
 		handLeft.setPosition(-handLeft.getWidth() / 2.0f,
 				-handLeft.getHeight() / 2.0f);
+		handLeft.setColor(colorTint);
 
 		region1 = new TextureRegion(hand3Tex, 0, 0, 800, 600);
 		handRight = new Sprite(region1);
@@ -436,6 +439,7 @@ public class GameScreen {
 		handRight.setOrigin(0.5f, 0.5f);
 		handRight.setPosition(-handRight.getWidth() / 2.0f,
 				-handRight.getHeight() / 2.0f);
+		handRight.setColor(colorTint);
 
 		region1 = new TextureRegion(hand4Tex, 0, 0, 800, 600);
 		handOut = new Sprite(region1);
@@ -443,6 +447,7 @@ public class GameScreen {
 		handOut.setOrigin(0.5f, 0.5f);
 		handOut.setPosition(-handOut.getWidth() / 2.0f,
 				-handOut.getHeight() / 2.0f);
+		handOut.setColor(colorTint);
 
 		region1 = new TextureRegion(doorTex1, 0, 0, 800, 600);
 		doorFront = new Sprite(region1);
@@ -451,6 +456,7 @@ public class GameScreen {
 		doorFront.setOrigin(0.5f, 0.5f);
 		doorFront.setPosition(-doorFront.getWidth() / 2.0f,
 				-doorFront.getHeight() / 2.0f);
+		doorFront.setColor(colorTint);
 
 		region1 = new TextureRegion(doorTex2, 0, 0, 800, 600);
 		doorLeft = new Sprite(region1);
@@ -458,6 +464,7 @@ public class GameScreen {
 		doorLeft.setOrigin(0.5f, 0.5f);
 		doorLeft.setPosition(-doorLeft.getWidth() / 2.0f,
 				-doorLeft.getHeight() / 2.0f);
+		doorLeft.setColor(colorTint);
 
 		region1 = new TextureRegion(doorTex3, 0, 0, 800, 600);
 		doorRight = new Sprite(region1);
@@ -466,6 +473,15 @@ public class GameScreen {
 		doorRight.setOrigin(0.5f, 0.5f);
 		doorRight.setPosition(-doorRight.getWidth() / 2.0f,
 				-doorRight.getHeight() / 2.0f);
+		doorRight.setColor(colorTint);
+
+		/*
+		 * for (int i = 0; i < 10; i++) { test[i] = 1; } for (int i = 10; i <
+		 * 90; i++) { if (i % lWidth == 9 || i % lHeight == 0){ if(i==49){
+		 * test[i] = 0; } else{ test[i] = 1; } } else test[i] = 0; } for (int i
+		 * = 90; i < 100; i++) { test[i] = 1; }
+		 */
+
 		for (int i = 0; i < test.length; i++) {
 			if (test[i] == 1) {
 				textureArray[i] = test[i];
@@ -493,37 +509,55 @@ public class GameScreen {
 			}
 		}
 
-		nickCage.setDirection(Direction.West);
+		nickCage.setDirection(Direction.North);
 
 		testlevel = new Level(lWidth, lHeight, test);
+
+		testDraw();
 
 	}
 
 	public void update() {
+		if(!initSound){
+			heartbeat.setLooping(true);
+			heartbeat.setVolume(1.0f);
+			heartbeat.play();
+			initSound = true;
+		}
 		if (!testlevel.endGame) {
 			nickCage.update();
 			if (nickCage.changedPosition) {
 				nickCage.changedPosition = false;
 				if (cats.length > 0) {
 					for (int c = 0; c < cats.length; c++) {
+//						System.out.println("len: " + cats.length + " pos: "
+//								+ cats[c].getPosition());
 						cats[c].move();
 					}
 				}
 				testlevel.checkPlayer(nickCage, heartPosition, endDoorPosition);
+				testDraw();
 			} else if (nickCage.changedDirection) {
 				if (!nickCage.isAtDoor && testlevel.doorPos > 0) {
 					testlevel.mapArray[testlevel.doorPos] = 4;
 					testlevel.doorPos = -1;
 				}
 				nickCage.changedDirection = false;
+				/*
+				 * if (cats.length > 0) { for (int c = 0; c < cats.length; c++)
+				 * { System.out.println("len: " + cats.length + " pos: " +
+				 * cats[c].getPosition()); cats[c].move(); } }
+				 */
+				testDraw();
 			}
 			if(!nickCage.hasHeart){
 				heartbeat.setVolume(nickCage.getVolume());
-				beat.setVolume(beat_id, nickCage.getVolume());
+				//beat.setVolume(beat_id, nickCage.getVolume());
+				//beat.play(1.0f);
 			}
 			else{
 				heartbeat.setVolume(0.0f);
-				beat.setVolume(beat_id, 0.0f);	
+				//beat.setVolume(beat_id, 0.0f);
 			}
 		}
 	}
@@ -743,6 +777,7 @@ public class GameScreen {
 					frameDivisor = 11;
 					break;
 				default:
+					System.out.println("Broken--fear: " + nickCage.getFear());
 					break;
 				}
 				int frame = frameCounter / frameDivisor;
@@ -750,8 +785,7 @@ public class GameScreen {
 				case 0:
 					heart1.draw(batch);
 					if(!didBeat){
-						up_id = beat_up.play();
-						beat_up.setVolume(up_id, nickCage.getVolume());
+						beat_up.play();
 						didBeat = true;
 					}
 					break;
@@ -762,8 +796,7 @@ public class GameScreen {
 				case 2:
 					heart3.draw(batch);
 					if(!didBeat){
-						down_id = beat_down.play();
-						beat_down.setVolume(down_id, nickCage.getVolume());
+						beat_down.play();
 						didBeat = true;
 					}
 					break;
@@ -790,6 +823,12 @@ public class GameScreen {
 			}
 		} else {
 			if(testlevel.endGameAnime < maxAnimeTime){
+				/*wallLeft[0].rotate(testlevel.endGameAnime);
+				wallLeft[0].draw(batch);
+				doorRight.rotate(testlevel.endGameAnime);
+				doorRight.draw(batch);
+				handOut.rotate(testlevel.endGameAnime);
+				handOut.draw(batch);*/
 				int frame = frameCounter / 30;
 				switch (frame) {
 				case 0:
@@ -825,6 +864,46 @@ public class GameScreen {
 		}
 		batch.end();
 
+	}
+
+	public void testDraw() {
+//		int p = 0;
+//		// Create file
+//		BufferedWriter out = null;
+//		try {
+//			FileWriter fstream = new FileWriter("out.txt");
+//			out = new BufferedWriter(fstream);
+//		} catch (Exception e) {// Catch exception if any
+//			System.err.println("Error: " + e.getMessage());
+//		}
+//
+//		for (int i = 0; i < lHeight; i++) {
+//			for (int j = 0; j < lWidth; j++) {
+//				try{
+//					out.write(test[p] + " ");
+//				} catch (Exception e) {// Catch exception if any
+//					System.err.print("Error in stream ");
+//				}
+//				
+//				//System.out.print(test[p]);
+//				//System.out.print(" ");
+//				p++;
+//			}
+//			try{
+//			out.write("\n");
+//			} catch (Exception e) {// Catch exception if any
+//				System.err.print("Error in stream ");
+//			}
+////			System.out.print("\n");
+//		}
+//		try {
+//			// Close the output stream
+//			out.close();
+//		} catch (Exception e) {// Catch exception if any
+//			System.err.println("Error: " + e.getMessage());
+//		}
+////		System.out.println("Position: " + nickCage.getPosition());
+////		System.out.println("Facing: " + nickCage.getDirection());
 	}
 
 	public void stopSound(){

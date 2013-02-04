@@ -8,8 +8,8 @@ public class Main {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "darkbeat";
 		cfg.useGL20 = true;
-		cfg.width = 1080;
-		cfg.height = 720;
+		cfg.width = 800;
+		cfg.height = 600;
 		
 		new LwjglApplication(new DarkBeatGame(), cfg);
 	}

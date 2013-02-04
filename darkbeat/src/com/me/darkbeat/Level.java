@@ -31,6 +31,8 @@ public class Level {
 
 		double temp = (levelHeight * levelHeight) + (levelWidth * levelWidth);
 		maxDistance = Math.sqrt(temp);
+		//System.out.println("max dist: " + maxDistance);
+
 	}
 
 	public int getHeight() {
@@ -109,8 +111,8 @@ public class Level {
 			} else {
 				mapArray[player.getOldPosition()] = 0;
 				mapArray[player.getPosition()] = 2;
-				id = footSteps.play(1.0f);
-				footSteps.setVolume(id, 0.015f);
+				id = footSteps.play(0.05f);
+				footSteps.setVolume(id, 0.001f);
 			}
 		} else {
 			switch (mapArray[player.getPosition()]) {
@@ -154,6 +156,7 @@ public class Level {
 					- (heart % width);
 			int heartOffset_y = (player.getPosition() / width)
 					- (heart / width);
+			//System.out.println("x: " + heartOffset_x + " y: " + heartOffset_y);
 			double distance = Math.sqrt(Math.pow(heartOffset_x, 2)
 					+ Math.pow(heartOffset_y, 2));
 			if (distance > maxDistance / 2.0) {
@@ -161,7 +164,7 @@ public class Level {
 			} else {
 				distance = distance / maxDistance;
 				distance = 1.0 - distance;
-				distance = Math.pow(distance, 8);
+				//distance = Math.pow(distance, 8);
 				player.setVolume((float) distance);
 							}
 		} else{
@@ -170,22 +173,19 @@ public class Level {
 					- (endDoor % width);
 			int endDoorOffset_y = (player.getPosition() / width)
 					- (endDoor / width);
+			//System.out.println("x: " + endDoorOffset_x + " y: " + endDoorOffset_y);
 			double distance = Math.sqrt(Math.pow(endDoorOffset_x, 2)
 					+ Math.pow(endDoorOffset_y, 2));
 			distance = distance / maxDistance;
 			distance = 1.0 - distance;
 			distance = Math.pow(distance, 3);
-			player.setFear(bobBarker(distance, player));
+			player.setFear(bobBarker(distance));
+			//System.out.println("dist: " + distance + " bob: " + bobBarker(distance));
 		}
+		//System.out.println("player pos: " + player.getPosition());
 	}
 	
-	public int bobBarker(double input, Player player){
-		int pos= player.getPosition();
-		/*if ((pos / 14) < 4 && (pos % 14) < 3) player.setVolume(0.025f);
-		else if ((pos / 14) < 4 && (pos % 14) < 6) player.setVolume(0.1f);
-		else if ((pos / 14) < 4 ) player.setVolume(0.2f);
-		else if((pos / 14) < 7 && (pos % 14) > 7) player.setVolume(0.4f);
-		else player.setVolume(1.0f);*/
+	public int bobBarker(double input){
 		if(input < .2) return 5;
 		else if(input < .4) return 4;
 		else if(input < .6) return 3;
